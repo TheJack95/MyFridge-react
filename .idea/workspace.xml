@@ -4,22 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6876403-582a-49b7-b881-f02208afb600" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/assets/button_plus.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/demo_product4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/error.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/icon_star.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/icon_star_disable.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/warning.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/ProductItem.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/ProductsList.js" afterDir="false" />
+    <list default="true" id="e6876403-582a-49b7-b881-f02208afb600" name="Changes" comment="Refactor ProductItem.js">
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/cake-small.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/cake.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/canned-food-small.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/canned-food.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/cheese-small.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/cheese.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/dish-small.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/dish.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/eggs-small.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/eggs.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/fish-small.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/fish.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/healthy-food-small.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/healthy-food.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/jam-jar-small.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/jam-jar.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/milk-small.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/milk.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/vegetable-small.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/vegetable.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/vegetables-small.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/vegetables.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/yogurt-small.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/foods/yogurt.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helpers/databaseHelper.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/screens/NewProduct.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/babel.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/babel.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Logo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Logo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Dashboard.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/demo_product4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/ProductItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ProductItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/ProductsList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ProductsList.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,6 +55,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -76,8 +103,18 @@
       <updated>1659870427800</updated>
       <workItem from="1659870430500" duration="14000" />
       <workItem from="1659870456570" duration="3919000" />
-      <workItem from="1659876453007" duration="2255000" />
+      <workItem from="1659876453007" duration="2900000" />
+      <workItem from="1659947921784" duration="3388000" />
+      <workItem from="1659969968308" duration="4009000" />
     </task>
+    <task id="LOCAL-00001" summary="Refactor ProductItem.js">
+      <created>1659878792228</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1659878792228</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -96,5 +133,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Refactor ProductItem.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor ProductItem.js" />
   </component>
 </project>

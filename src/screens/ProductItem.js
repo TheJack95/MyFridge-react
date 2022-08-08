@@ -18,7 +18,7 @@ export default class ProductItem extends Component {
     render() {
         return (
             <View style={styles.product}>
-                <Image style={styles.product_image} source={this.props.image} />
+                <Image source={this.props.image} />
                 <View style={styles.product_detail}>
                     <View style={styles.product_detail_header}>
                         <Text style={styles.product_name} numberOfLines={2} ellipsizeMode='tail'>
@@ -52,10 +52,6 @@ const styles = StyleSheet.create({
     body: {
         flex: 1,
         height: Screen.height - 122,
-    },
-    product_image: {
-        width: 72,
-        height: 72,
     },
     product_detail: {
         justifyContent: 'space-around',

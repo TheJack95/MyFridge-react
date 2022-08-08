@@ -2,7 +2,7 @@ import React from 'react'
 import Logo from '../components/Logo'
 import ProductItem from './ProductItem'
 import {Dimensions, FlatList, Image, StyleSheet, TouchableOpacity, View} from 'react-native';
-import demoProduct from '../assets/demo_product4.png'
+import demoProduct from '../assets/foods/cake-small.png'
 import btnPlus from '../assets/button_plus.png'
 import Header from "../components/Header";
 import {theme} from "../core/theme";
@@ -26,7 +26,7 @@ export default function ProductsList({navigation}) {
     };
 
     const onPlusPress = () => {
-
+        navigation.navigate('NewProduct');
     }
 
     return (
