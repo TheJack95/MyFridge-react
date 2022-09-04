@@ -15,21 +15,31 @@ export default class ProductItem extends Component {
         super(props)
     }
 
+    getDate(dateString) {
+        const date = new Date(dateString);
+        // return date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();//format: d-m-y;
+        return date.toLocaleDateString();
+    }
+
+    isExpired() {
+        return new Date(this.props.expirationDate) <= new Date();
+    }
+
     render() {
         return (
             <View style={styles.product}>
-                <Image source={this.props.image} />
+                {/*<Image source={require(this.props.image)} />*/}
                 <View style={styles.product_detail}>
                     <View style={styles.product_detail_header}>
                         <Text style={styles.product_name} numberOfLines={2} ellipsizeMode='tail'>
-                            Fresh countryside chicken thigh ( pack of 4 )
+                            {this.props.name}
                         </Text>
-                        <Image style={styles.product_favorite} source={this.props.expired ? error : warning} />
+                        <Image style={styles.product_favorite} source={this.isExpired() ? error : warning} />
                     </View>
                     <View style={styles.product_detail_footer}>
                         <View style={styles.product_exp_date_container}>
                             <Text style={styles.product_expiration_date}>
-                                Expiration date: 28/11/2023
+                                Expiration date: {this.getDate(this.props.expirationDate)}
                             </Text>
                         </View>
                     </View>

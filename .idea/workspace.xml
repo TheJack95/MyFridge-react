@@ -4,41 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6876403-582a-49b7-b881-f02208afb600" name="Changes" comment="Refactor ProductItem.js">
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/cake-small.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/cake.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/canned-food-small.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/canned-food.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/cheese-small.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/cheese.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/dish-small.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/dish.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/eggs-small.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/eggs.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/fish-small.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/fish.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/healthy-food-small.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/healthy-food.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/jam-jar-small.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/jam-jar.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/milk-small.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/milk.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/vegetable-small.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/vegetable.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/vegetables-small.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/vegetables.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/yogurt-small.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/foods/yogurt.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/helpers/databaseHelper.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/NewProduct.js" afterDir="false" />
+    <list default="true" id="e6876403-582a-49b7-b881-f02208afb600" name="Changes" comment="Added page to add new product">
+      <change afterPath="$PROJECT_DIR$/src/models/Food.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/demo_product4.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/theme.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/theme.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/databaseHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/databaseHelper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/emailValidator.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/nameValidator.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/passwordValidator.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/LoginScreen.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/NewProduct.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/NewProduct.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/ProductItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ProductItem.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/ProductsList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ProductsList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/RegisterScreen.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/ResetPasswordScreen.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/StartScreen.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,13 +66,14 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/assets" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/models" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="F:\IntelliJ IDEA 2021.3.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Giacomo\IdeaProjects\MyFridge-react\src\models" />
       <recent name="C:\Users\Giacomo\IdeaProjects\MyFridge-react\src\assets" />
       <recent name="C:\Users\Giacomo\IdeaProjects\MyFridge-react" />
       <recent name="C:\Users\Giacomo\IdeaProjects\MyFridge-react\src" />
@@ -105,7 +91,13 @@
       <workItem from="1659870456570" duration="3919000" />
       <workItem from="1659876453007" duration="2900000" />
       <workItem from="1659947921784" duration="3388000" />
-      <workItem from="1659969968308" duration="4009000" />
+      <workItem from="1659969968308" duration="4593000" />
+      <workItem from="1661255412016" duration="7000" />
+      <workItem from="1661275545852" duration="1709000" />
+      <workItem from="1662041177908" duration="4354000" />
+      <workItem from="1662120666838" duration="5767000" />
+      <workItem from="1662202071669" duration="2138000" />
+      <workItem from="1662288803384" duration="1558000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor ProductItem.js">
       <created>1659878792228</created>
@@ -114,7 +106,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659878792228</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added page to add new product">
+      <created>1659974044510</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1659974044510</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,6 +133,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Refactor ProductItem.js" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor ProductItem.js" />
+    <MESSAGE value="Added page to add new product" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added page to add new product" />
   </component>
 </project>

@@ -1,11 +1,12 @@
-import React from 'react'
-import Logo from '../components/Logo'
+import React, {useEffect, useState} from 'react'
 import ProductItem from './ProductItem'
-import {Dimensions, FlatList, Image, StyleSheet, TouchableOpacity, View} from 'react-native';
-import demoProduct from '../assets/foods/cake-small.png'
+import {Button, Dimensions, FlatList, Image, StatusBar, StyleSheet, TouchableOpacity, View} from 'react-native';
 import btnPlus from '../assets/button_plus.png'
+import iconStar from '../assets/icon_star.png'
 import Header from "../components/Header";
 import {theme} from "../core/theme";
+import {getAllData, removeAllData} from "../helpers/databaseHelper";
+import TaskContext, {Food} from "../models/Food";
 
 const Screen = {
     width: Dimensions.get('window').width,
@@ -13,6 +14,9 @@ const Screen = {
 }
 
 export default function ProductsList({navigation}) {
+    const {useQuery} = TaskContext;
+    const items = useQuery(Food);
+
     const renderSeparator = () => {
         return (
             <View
@@ -31,35 +35,38 @@ export default function ProductsList({navigation}) {
 
     return (
         <View style={styles.container}>
+            <StatusBar
+                animated={true}
+                backgroundColor="#61dafb"
+                barStyle={'light-content'}
+            />
             <View style={styles.logoContainer}>
                 <Header>My Fridge</Header>
-                <Logo/>
             </View>
             <View style={styles.content}>
                 <FlatList
-                    data={
-                        [
-                            {id: 1, image: demoProduct, expired: true},
-                            {id: 2, image: demoProduct},
-                            {id: 3, image: demoProduct, expired: true},
-                            {id: 4, image: demoProduct, expired: true},
-                            {id: 5, image: demoProduct},
-                            {id: 6, image: demoProduct},
-                            {id: 7, image: demoProduct},
-                            {id: 8, image: demoProduct}
-                        ]
-                    }
+                    data={items}
                     renderItem={({item}) =>
-                        <ProductItem image={item.image} expired={item.expired}/>
+                        <ProductItem name={item.name} image={item.image} expirationDate={item.expirationDate}/>
                     }
                     ItemSeparatorComponent={renderSeparator}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item.id.toString()}
                 />
             </View>
             <View style={styles.bottomBarContainer}>
+                <Button
+                    onPress={removeAllData}
+                    title="delete"
+                    color={theme.colors.light}
+                    accessibilityLabel="delete"
+                />
                 <TouchableOpacity
                     onPress={onPlusPress}>
                     <Image style={styles.buttonPlus} source={btnPlus}/>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={getAllData}>
+                    <Image style={styles.buttonPlus} source={iconStar}/>
                 </TouchableOpacity>
             </View>
         </View>
@@ -72,10 +79,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     logoContainer: {
-        marginTop: 50,
+        paddingTop: 35,
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: theme.colors.primary,
+        width: Screen.width,
     },
     content: {
         // height: Screen.height,
@@ -89,15 +98,15 @@ const styles = StyleSheet.create({
     },
     bottomBarContainer: {
         alignItems: "flex-end",
-        backgroundColor: theme.colors.background
+        backgroundColor: theme.colors.primary
     },
     buttonPlus: {
-        width: 50,
-        height: 50,
+        width: 40,
+        height: 40,
         marginBottom: 10,
         marginTop: 10,
         marginRight: 20,
-        tintColor: theme.colors.primary,
+        tintColor: theme.colors.light,
     }
 });
 

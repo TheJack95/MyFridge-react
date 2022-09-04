@@ -5,13 +5,15 @@ import { theme } from '../core/theme'
 
 export default function Header(props) {
   const fontSize = props.fontSize ?? 30;
-  return <Text style={styles(fontSize).header} {...props} />
+  const color = props.color ?? theme.colors.light
+  return <Text
+      style={styles(fontSize,color).header} {...props} />
 }
 
-const styles = (fontSize) => StyleSheet.create({
+const styles = (fontSize, color) => StyleSheet.create({
   header: {
     fontSize: fontSize,
-    color: theme.colors.primary,
+    color: color,
     fontWeight: 'bold',
     paddingVertical: 12,
   },

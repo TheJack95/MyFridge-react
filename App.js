@@ -5,30 +5,29 @@ import {createStackNavigator} from '@react-navigation/stack'
 import {theme} from './src/core/theme'
 import {ProductsList,} from './src/screens'
 import NewProduct from "./src/screens/NewProduct";
+import TaskContext from './src/models/Food';
 
 const Stack = createStackNavigator()
 
 export default function App() {
+
+    const {RealmProvider} = TaskContext;
+
     return (
-        <Provider theme={theme}>
-            <NavigationContainer>
-                <Stack.Navigator
-                    initialRouteName="ProductsList"
-                    screenOptions={{
-                        headerShown: false,
-                    }}
-                >
-                    {/*<Stack.Screen name="StartScreen" component={StartScreen}/>*/}
-                    {/*<Stack.Screen name="LoginScreen" component={LoginScreen}/>*/}
-                    {/*<Stack.Screen name="RegisterScreen" component={RegisterScreen}/>*/}
-                    <Stack.Screen name="ProductsList" component={ProductsList}/>
-                    <Stack.Screen name="NewProduct" component={NewProduct}/>
-                    {/*<Stack.Screen*/}
-                    {/*    name="ResetPasswordScreen"*/}
-                    {/*    component={ResetPasswordScreen}*/}
-                    {/*/>*/}
-                </Stack.Navigator>
-            </NavigationContainer>
-        </Provider>
+        <RealmProvider>
+            <Provider theme={theme}>
+                <NavigationContainer>
+                    <Stack.Navigator
+                        initialRouteName="ProductsList"
+                        screenOptions={{
+                            headerShown: false,
+                        }}
+                    >
+                        <Stack.Screen name="ProductsList" component={ProductsList}/>
+                        <Stack.Screen name="NewProduct" component={NewProduct}/>
+                    </Stack.Navigator>
+                </NavigationContainer>
+            </Provider>
+        </RealmProvider>
     )
 }
