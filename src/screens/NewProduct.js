@@ -11,7 +11,7 @@ import TaskContext, {Food} from '../models/Food';
 import demoProduct from '../assets/foods/cake.png'
 import {theme} from "../core/theme";
 
-export default function HelloWorldApp({navigation}) {
+export default function NewProduct({navigation}) {
     const [name, setName] = useState('')
     const [date, setDate] = useState(new Date())
 
