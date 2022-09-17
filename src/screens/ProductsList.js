@@ -6,7 +6,7 @@ import iconStar from '../assets/icon_star.png'
 import Header from "../components/Header";
 import {theme} from "../core/theme";
 import {getAllData, removeAllData} from "../helpers/databaseHelper";
-import TaskContext, {Food} from "../models/Food";
+import {Food} from "../models/Food";
 
 const Screen = {
     width: Dimensions.get('window').width,
@@ -14,8 +14,28 @@ const Screen = {
 }
 
 export default function ProductsList({navigation}) {
-    const {useQuery} = TaskContext;
-    const items = useQuery(Food);
+    const [items, setItems] = useState([]);
+    useEffect(() => {
+        Realm.open({
+            schema: [Food], // predefined schema
+        }).then(realm => {
+            const tasks = realm.objects(Food);
+            setItems([...tasks]);
+            try {
+                tasks.addListener(() => {
+                    setItems([...tasks]);
+                });
+            } catch (error) {
+                console.error(
+                    `Unable to update the tasks' state, an exception was thrown within the change listener: ${error}`
+                );
+            }
+            return () => {
+                tasks.removeAllListeners();
+                realm.close();
+            };
+        });
+    }, []);
 
     const renderSeparator = () => {
         return (

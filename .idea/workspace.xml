@@ -4,27 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6876403-582a-49b7-b881-f02208afb600" name="Changes" comment="Added page to add new product">
-      <change afterPath="$PROJECT_DIR$/src/models/Food.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="e6876403-582a-49b7-b881-f02208afb600" name="Changes" comment="Add realm. small ui changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/theme.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/theme.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/databaseHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/databaseHelper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/emailValidator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/nameValidator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/passwordValidator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/LoginScreen.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/NewProduct.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/NewProduct.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/ProductItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ProductItem.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/ProductsList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ProductsList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/RegisterScreen.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/ResetPasswordScreen.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/StartScreen.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +79,9 @@
       <workItem from="1662041177908" duration="4354000" />
       <workItem from="1662120666838" duration="5767000" />
       <workItem from="1662202071669" duration="2138000" />
-      <workItem from="1662288803384" duration="1558000" />
+      <workItem from="1662288803384" duration="1693000" />
+      <workItem from="1663343893455" duration="436000" />
+      <workItem from="1663403797020" duration="1373000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor ProductItem.js">
       <created>1659878792228</created>
@@ -113,7 +97,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659974044510</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add realm. small ui changes">
+      <created>1662290503030</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1662290503030</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,6 +125,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Refactor ProductItem.js" />
     <MESSAGE value="Added page to add new product" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added page to add new product" />
+    <MESSAGE value="Add realm. small ui changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add realm. small ui changes" />
   </component>
 </project>
