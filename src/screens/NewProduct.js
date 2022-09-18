@@ -5,20 +5,22 @@ import Header from "../components/Header";
 import TextInput from "../components/TextInput";
 import Button from "../components/Button";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Image, StyleSheet, View} from "react-native";
-import TaskContext, {Food} from '../models/Food';
+import {Image, StyleSheet, Text, View} from "react-native";
+import { Food } from "../models/Food";
+import { TaskRealmContext } from "../models";
 
 import demoProduct from '../assets/foods/cake.png'
 import {theme} from "../core/theme";
 
 export default function NewProduct({navigation}) {
-    const [name, setName] = useState('')
-    const [date, setDate] = useState(new Date())
+    const [name, setName] = useState('');
+    const [date, setDate] = useState(new Date());
+    const [show, setShow] = useState(true);
 
-    const {useRealm, useQuery, useObject} = TaskContext;
+    const {useRealm} = TaskRealmContext;
     const realm = useRealm();
     const handleAddFood = useCallback(
-        (): void => {
+        () => {
             realm.write(() => {
                 realm.create('Food', Food.generate(name, date, '../assets/foods/cake.png'));
             });
@@ -28,6 +30,7 @@ export default function NewProduct({navigation}) {
 
     const onDateChange = (event, newDate) => {
         setDate(new Date(newDate));
+        setShow(false);
     }
 
     return (
@@ -47,14 +50,20 @@ export default function NewProduct({navigation}) {
                 onChangeText={setName}
                 value={name}
             />
-            <Header fontSize={21}>Expiration Date</Header>
+            <Header
+                fontSize={21}
+                color={theme.colors.primary}
+            >Expiration Date</Header>
             <View style={styles.container}>
-                <DateTimePicker
-                    value={date}
-                    mode="date"
-                    onChange={onDateChange}
-                    display="spinner"
-                />
+                <Text>{date.toLocaleDateString()}</Text>
+                {show && (
+                    <DateTimePicker
+                        value={date}
+                        mode="date"
+                        onChange={onDateChange}
+                        display="spinner"
+                    />
+                )}
             </View>
             <Button mode="contained" onPress={handleAddFood}>
                 Save
@@ -66,6 +75,7 @@ export default function NewProduct({navigation}) {
 const styles = StyleSheet.create({
     container: {
         width: 300,
+        alignItems: 'center'
     },
     product_image: {
         width: 100,

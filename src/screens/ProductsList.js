@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useMemo, useState} from 'react'
 import ProductItem from './ProductItem'
-import {Button, Dimensions, FlatList, Image, StatusBar, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Dimensions, FlatList, Image, StatusBar, StyleSheet, TouchableOpacity, View} from 'react-native';
 import btnPlus from '../assets/button_plus.png'
-import iconStar from '../assets/icon_star.png'
 import Header from "../components/Header";
 import {theme} from "../core/theme";
-import {getAllData, removeAllData} from "../helpers/databaseHelper";
+import {TaskRealmContext} from "../models";
 import {Food} from "../models/Food";
 
 const Screen = {
@@ -13,29 +12,13 @@ const Screen = {
     height: Dimensions.get('window').height
 }
 
+const { useRealm, useQuery } = TaskRealmContext;
+
 export default function ProductsList({navigation}) {
-    const [items, setItems] = useState([]);
-    useEffect(() => {
-        Realm.open({
-            schema: [Food], // predefined schema
-        }).then(realm => {
-            const tasks = realm.objects(Food);
-            setItems([...tasks]);
-            try {
-                tasks.addListener(() => {
-                    setItems([...tasks]);
-                });
-            } catch (error) {
-                console.error(
-                    `Unable to update the tasks' state, an exception was thrown within the change listener: ${error}`
-                );
-            }
-            return () => {
-                tasks.removeAllListeners();
-                realm.close();
-            };
-        });
-    }, []);
+    const realm = useRealm();
+    const result = useQuery(Food);
+
+    const items = useMemo(() => result.sorted("expirationDate"), [result]);
 
     const renderSeparator = () => {
         return (
@@ -74,19 +57,9 @@ export default function ProductsList({navigation}) {
                 />
             </View>
             <View style={styles.bottomBarContainer}>
-                <Button
-                    onPress={removeAllData}
-                    title="delete"
-                    color={theme.colors.light}
-                    accessibilityLabel="delete"
-                />
                 <TouchableOpacity
                     onPress={onPlusPress}>
                     <Image style={styles.buttonPlus} source={btnPlus}/>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={getAllData}>
-                    <Image style={styles.buttonPlus} source={iconStar}/>
                 </TouchableOpacity>
             </View>
         </View>

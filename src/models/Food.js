@@ -1,12 +1,6 @@
 import {createRealmContext, Realm} from "@realm/react";
 export class Food extends Realm.Object {
-  _id: Realm.BSON.ObjectId;
-  name: string;
-  expirationDate: Date;
-  imageUrl: string;
-
-
-  static generate(name, expirationDate,imageUrl) {
+  static generate(name, expirationDate, imageUrl) {
     return {
       _id: new Realm.BSON.ObjectId(),
       name,
@@ -16,7 +10,7 @@ export class Food extends Realm.Object {
   }
 
   static schema = {
-    name: "Task",
+    name: "Food",
     primaryKey: "_id",
     properties: {
       _id: "objectId",
@@ -26,8 +20,3 @@ export class Food extends Realm.Object {
     },
   };
 }
-
-const config  = {
-  schema: [Food],
-};
-export default createRealmContext(config);
