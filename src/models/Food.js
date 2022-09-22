@@ -1,5 +1,10 @@
-import {createRealmContext, Realm} from "@realm/react";
+import {Realm} from "@realm/react";
 export class Food extends Realm.Object {
+  _id: Realm.BSON.ObjectId;
+  name: string;
+  imageUrl: string;
+  expirationDate: Date;
+
   static generate(name, expirationDate, imageUrl) {
     return {
       _id: new Realm.BSON.ObjectId(),

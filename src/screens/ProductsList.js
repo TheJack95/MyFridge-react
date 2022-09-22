@@ -1,10 +1,10 @@
-import React, {useEffect, useMemo, useState} from 'react'
+import React from 'react'
 import ProductItem from './ProductItem'
 import {Dimensions, FlatList, Image, StatusBar, StyleSheet, TouchableOpacity, View} from 'react-native';
 import btnPlus from '../assets/button_plus.png'
 import Header from "../components/Header";
 import {theme} from "../core/theme";
-import {TaskRealmContext} from "../models";
+import {RealmContext} from "../models";
 import {Food} from "../models/Food";
 
 const Screen = {
@@ -12,13 +12,9 @@ const Screen = {
     height: Dimensions.get('window').height
 }
 
-const { useRealm, useQuery } = TaskRealmContext;
-
 export default function ProductsList({navigation}) {
-    const realm = useRealm();
-    const result = useQuery(Food);
-
-    const items = useMemo(() => result.sorted("expirationDate"), [result]);
+    const {useQuery} = RealmContext;
+    const items = useQuery(Food);
 
     const renderSeparator = () => {
         return (
@@ -53,7 +49,7 @@ export default function ProductsList({navigation}) {
                         <ProductItem name={item.name} image={item.image} expirationDate={item.expirationDate}/>
                     }
                     ItemSeparatorComponent={renderSeparator}
-                    keyExtractor={item => item.id.toString()}
+                    keyExtractor={item => item._id.toString()}
                 />
             </View>
             <View style={styles.bottomBarContainer}>

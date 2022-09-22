@@ -7,7 +7,7 @@ import Button from "../components/Button";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Image, StyleSheet, Text, View} from "react-native";
 import { Food } from "../models/Food";
-import { TaskRealmContext } from "../models";
+import { RealmContext } from "../models";
 
 import demoProduct from '../assets/foods/cake.png'
 import {theme} from "../core/theme";
@@ -17,7 +17,7 @@ export default function NewProduct({navigation}) {
     const [date, setDate] = useState(new Date());
     const [show, setShow] = useState(true);
 
-    const {useRealm} = TaskRealmContext;
+    const {useRealm} = RealmContext;
     const realm = useRealm();
     const handleAddFood = useCallback(
         () => {

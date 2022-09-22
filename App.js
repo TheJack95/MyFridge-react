@@ -5,13 +5,13 @@ import {createStackNavigator} from '@react-navigation/stack'
 import {theme} from './src/core/theme'
 import {ProductsList,} from './src/screens'
 import NewProduct from "./src/screens/NewProduct";
-import {TaskRealmContext} from './src/models';
+import {RealmContext} from './src/models';
 
 const Stack = createStackNavigator()
 
 export default function App() {
 
-    const {RealmProvider} = TaskRealmContext;
+    const {RealmProvider} = RealmContext;
 
     return (
         <RealmProvider>
