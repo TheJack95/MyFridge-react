@@ -5,7 +5,7 @@ import Header from "../components/Header";
 import TextInput from "../components/TextInput";
 import Button from "../components/Button";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Image, StyleSheet, Text, View} from "react-native";
+import {Image, StyleSheet, Text, View, Dimensions} from "react-native";
 import { Food } from "../models/Food";
 import { RealmContext } from "../models";
 
@@ -15,22 +15,26 @@ import {theme} from "../core/theme";
 export default function NewProduct({navigation}) {
     const [name, setName] = useState('');
     const [date, setDate] = useState(new Date());
-    const [show, setShow] = useState(true);
 
     const {useRealm} = RealmContext;
     const realm = useRealm();
     const handleAddFood = useCallback(
         () => {
             realm.write(() => {
-                realm.create('Food', Food.generate(name, date, '../assets/foods/cake.png'));
+                console.log(name)
+                realm.create('Food', Food.generate(name, date, 'cake'));
+                navigation.goBack();
             });
         },
         [realm],
     );
 
+    const onNameChange = (event, newName) => {
+        setName(newName);
+    }
+
     const onDateChange = (event, newDate) => {
         setDate(new Date(newDate));
-        setShow(false);
     }
 
     return (
@@ -46,8 +50,7 @@ export default function NewProduct({navigation}) {
             </Header>
             <TextInput
                 label="Name"
-                returnKeyType="next"
-                onChangeText={setName}
+                onChangeText={onNameChange}
                 value={name}
             />
             <Header
@@ -55,15 +58,13 @@ export default function NewProduct({navigation}) {
                 color={theme.colors.primary}
             >Expiration Date</Header>
             <View style={styles.container}>
-                <Text>{date.toLocaleDateString()}</Text>
-                {show && (
-                    <DateTimePicker
-                        value={date}
-                        mode="date"
-                        onChange={onDateChange}
-                        display="spinner"
-                    />
-                )}
+                <DateTimePicker
+                    value={date}
+                    mode="date"
+                    onChange={onDateChange}
+                    display="spinner"
+                    style={styles.datepicker}
+                />
             </View>
             <Button mode="contained" onPress={handleAddFood}>
                 Save
@@ -76,6 +77,11 @@ const styles = StyleSheet.create({
     container: {
         width: 300,
         alignItems: 'center'
+    },
+    datepicker: {
+        width: 400,
+        margin: 0,
+        padding: 0
     },
     product_image: {
         width: 100,

@@ -2,6 +2,7 @@ import React from 'react'
 import ProductItem from './ProductItem'
 import {Dimensions, FlatList, Image, StatusBar, StyleSheet, TouchableOpacity, View} from 'react-native';
 import btnPlus from '../assets/button_plus.png'
+import warning from '../assets/warning.png'
 import Header from "../components/Header";
 import {theme} from "../core/theme";
 import {RealmContext} from "../models";
@@ -13,8 +14,9 @@ const Screen = {
 }
 
 export default function ProductsList({navigation}) {
-    const {useQuery} = RealmContext;
+    const {useQuery,  useRealm} = RealmContext;
     const items = useQuery(Food);
+    const realm = useRealm();
 
     const renderSeparator = () => {
         return (
@@ -32,6 +34,15 @@ export default function ProductsList({navigation}) {
         navigation.navigate('NewProduct');
     }
 
+    const onDeleteAllPress = () => {
+        realm.write(() => {
+            realm.deleteAll();
+        });
+    }
+    const logItmes = () => {
+       console.log(items)
+    }
+
     return (
         <View style={styles.container}>
             <StatusBar
@@ -46,7 +57,7 @@ export default function ProductsList({navigation}) {
                 <FlatList
                     data={items}
                     renderItem={({item}) =>
-                        <ProductItem name={item.name} image={item.image} expirationDate={item.expirationDate}/>
+                        <ProductItem name={item.name} imageUrl={item.imageUrl} expirationDate={item.expirationDate}/>
                     }
                     ItemSeparatorComponent={renderSeparator}
                     keyExtractor={item => item._id.toString()}
@@ -56,6 +67,14 @@ export default function ProductsList({navigation}) {
                 <TouchableOpacity
                     onPress={onPlusPress}>
                     <Image style={styles.buttonPlus} source={btnPlus}/>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={onDeleteAllPress}>
+                    <Image style={styles.buttonPlus} source={warning}/>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={logItmes}>
+                    <Image style={styles.buttonPlus} source={warning}/>
                 </TouchableOpacity>
             </View>
         </View>

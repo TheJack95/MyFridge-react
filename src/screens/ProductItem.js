@@ -21,6 +21,13 @@ export default class ProductItem extends Component {
         return date.toLocaleDateString();
     }
 
+    getImage(imageName) {
+		if(imageName)
+	   		return require('../assets/foods/cake-small.png');
+		
+		return require('../assets/foods/fish-small.png');
+    }
+
     isExpired() {
         return new Date(this.props.expirationDate) <= new Date();
     }
@@ -28,7 +35,7 @@ export default class ProductItem extends Component {
     render() {
         return (
             <View style={styles.product}>
-                {/*<Image source={require(this.props.image)} />*/}
+                <Image source={this.getImage(this.props.imageUrl)} />
                 <View style={styles.product_detail}>
                     <View style={styles.product_detail_header}>
                         <Text style={styles.product_name} numberOfLines={2} ellipsizeMode='tail'>
