@@ -6,12 +6,22 @@ import {theme} from './src/core/theme'
 import {ProductsList,} from './src/screens'
 import NewProduct from "./src/screens/NewProduct";
 import {RealmContext} from './src/models';
+import * as Notifications from "expo-notifications";
 
 const Stack = createStackNavigator()
 
 export default function App() {
 
     const {RealmProvider} = RealmContext;
+
+    Notifications.setNotificationHandler({
+        handleNotification: async () => ({
+            shouldShowAlert: true,
+            shouldPlaySound: true,
+            shouldSetBadge: true,
+        }),
+    });
+
 
     return (
         <RealmProvider>
