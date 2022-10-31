@@ -36,7 +36,6 @@ export default function NewProduct({navigation}) {
 
     const onNameChange = (value) => {
         setText(value);
-        console.log(text);
     }
 
     const onDateChange = (event, selectedDate) => {
@@ -45,7 +44,7 @@ export default function NewProduct({navigation}) {
 
     return (
         <Background>
-            <BackButton goBack={navigation.goBack()}/>
+            <BackButton navigation={navigation}/>
             <Header color={theme.colors.primary}>Add new product</Header>
             <Image style={styles.product_image} source={demoProduct}/>
             <Header

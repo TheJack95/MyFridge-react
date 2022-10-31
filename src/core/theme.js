@@ -7,7 +7,9 @@ export const theme = {
     text: '#000000',
     primary: '#560CCE',
     secondary: '#414757',
-    error: '#f13a59',
-    light: '#f6f6f6'
+    error: '#cb1331',
+    light: '#f6f6f6',
+    warning: '#E47F28',
+    success: '#7AC439',
   },
 }

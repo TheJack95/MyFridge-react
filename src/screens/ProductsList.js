@@ -1,8 +1,8 @@
 import React from 'react'
 import ProductItem from './ProductItem'
-import {Dimensions, FlatList, Image, StatusBar, StyleSheet, TouchableOpacity, View} from 'react-native';
-import btnPlus from '../assets/button_plus.png'
-import warning from '../assets/warning.png'
+import {Dimensions, FlatList, StatusBar, StyleSheet, TouchableOpacity, View} from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Header from "../components/Header";
 import {theme} from "../core/theme";
 import {RealmContext} from "../models";
@@ -14,9 +14,8 @@ const Screen = {
 }
 
 export default function ProductsList({navigation}) {
-    const {useQuery,  useRealm} = RealmContext;
+    const {useQuery} = RealmContext;
     const items = useQuery(Food);
-    const realm = useRealm();
 
     const renderSeparator = () => {
         return (
@@ -32,6 +31,9 @@ export default function ProductsList({navigation}) {
 
     const onPlusPress = () => {
         navigation.navigate('NewProduct');
+    }
+
+    const onScanPress  = () => {
     }
 
     return (
@@ -56,8 +58,12 @@ export default function ProductsList({navigation}) {
             </View>
             <View style={styles.bottomBarContainer}>
                 <TouchableOpacity
-                    onPress={onPlusPress}>
-                    <Image style={styles.buttonPlus} source={btnPlus}/>
+                    onPress={onScanPress} style={styles.iconContainer}>
+                    <MaterialCommunityIcons name="barcode-scan" size={40} color={theme.colors.light} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={onPlusPress} style={styles.iconContainer}>
+                    <AntDesign name="pluscircleo" size={40} color={theme.colors.light} />
                 </TouchableOpacity>
             </View>
         </View>
@@ -88,17 +94,13 @@ const styles = StyleSheet.create({
         marginBottom: 56,
     },
     bottomBarContainer: {
-        alignItems: "flex-end",
-        backgroundColor: theme.colors.primary
+        backgroundColor: theme.colors.primary,
+        flexDirection: "row",
+        justifyContent: "space-around"
     },
-    buttonPlus: {
-        width: 40,
-        height: 40,
-        marginBottom: 10,
-        marginTop: 10,
-        marginRight: 20,
-        tintColor: theme.colors.light,
-    }
+    iconContainer: {
+        margin: 20,
+    },
 });
 
 

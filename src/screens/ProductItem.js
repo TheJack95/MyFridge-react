@@ -1,9 +1,8 @@
 import React from 'react';
 import {Dimensions, Image, StyleSheet, Text, View, Animated, I18nManager} from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
-import warning from '../assets/warning.png'
-import error from '../assets/error.png'
-import check from '../assets/check.png'
 import {theme} from "../core/theme";
 import {RectButton, Swipeable} from "react-native-gesture-handler";
 import {RealmContext} from "../models";
@@ -14,14 +13,13 @@ const Screen = {
 }
 
 export default function ProductItem(props) {
-    const {_id, foodName, imageUrl, expirationDate} = props.item;
+    const {foodName, imageUrl, expirationDate} = props.item;
     const {useRealm} = RealmContext;
     const realm = useRealm();
     let swipeableRow: Swipeable;
 
     const getDate = () => {
-        const date = new Date(expirationDate);
-        return date.toLocaleDateString();
+        return expirationDate.toLocaleDateString();
     }
 
     const getImage = () => {
@@ -33,14 +31,15 @@ export default function ProductItem(props) {
 
     const isNearExpirationDate = () => {
         const today = new Date();
-        const date = new Date(expirationDate);
-        if(date <= today)
-            return error;
-        const diffTime = Math.abs(date, today);
+        if(expirationDate <= today)
+            return <AntDesign name="closecircle" size={30} color={theme.colors.error} />;
+
+        const diffTime = Math.abs(expirationDate - today);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         if(diffDays <= 5)
-            return warning;
-        return check;
+            return <Entypo name="warning" size={30} color={theme.colors.warning} />;
+
+        return <AntDesign name="checkcircle" size={30} color={theme.colors.success} />;
     }
 
     const renderRightAction = (
@@ -103,7 +102,7 @@ export default function ProductItem(props) {
                         <Text style={styles.product_name} numberOfLines={2} ellipsizeMode='tail'>
                             {foodName}
                         </Text>
-                        <Image style={styles.product_favorite} source={isNearExpirationDate()} />
+                        {isNearExpirationDate()}
                     </View>
                     <View style={styles.product_detail_footer}>
                         <View style={styles.product_exp_date_container}>
@@ -149,8 +148,8 @@ const styles = StyleSheet.create({
         width: 180,
     },
     product_favorite: {
-        width: 30,
-        height: 30,
+        width: 24,
+        height: 24,
     },
     product_detail_footer: {
         alignItems: 'center',
