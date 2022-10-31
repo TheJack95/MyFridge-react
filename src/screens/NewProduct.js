@@ -1,45 +1,51 @@
-import React, {useCallback, useState} from 'react';
+import React, {useState} from 'react';
 import BackButton from "../components/BackButton";
 import Background from "../components/Background";
 import Header from "../components/Header";
 import TextInput from "../components/TextInput";
 import Button from "../components/Button";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Image, StyleSheet, Text, View, Dimensions} from "react-native";
-import { Food } from "../models/Food";
-import { RealmContext } from "../models";
-
+import {Image, StyleSheet, View} from "react-native";
+import {Food} from "../models/Food";
+import {RealmContext} from "../models";
 import demoProduct from '../assets/foods/cake.png'
 import {theme} from "../core/theme";
+import {schedulePushNotification} from "../helpers/notificationsHelper";
 
 export default function NewProduct({navigation}) {
-    const [name, setName] = useState('');
+    const [text, setText] = useState('');
     const [date, setDate] = useState(new Date());
 
     const {useRealm} = RealmContext;
     const realm = useRealm();
-    const handleAddFood = useCallback(
-        () => {
-            realm.write(() => {
-                console.log(name)
-                realm.create('Food', Food.generate(name, date, 'cake'));
+    const handleAddFood = () => {
+        realm.write(() => {
+            let food = Food.generate(text, date, 'cake');
+            realm.create('Food', food);
+            let notificationDate = new Date(date);
+            notificationDate.setHours(15, 40);
+            schedulePushNotification(
+                "Food notification", text +" in scadenza", notificationDate
+            ).then(value => navigation.goBack())
+            .catch(error => {
+                console.error("Error scheduling notification: ", error);
                 navigation.goBack();
-            });
-        },
-        [realm],
-    );
-
-    const onNameChange = (event, newName) => {
-        setName(newName);
+            })
+        });
     }
 
-    const onDateChange = (event, newDate) => {
-        setDate(new Date(newDate));
+    const onNameChange = (value) => {
+        setText(value);
+        console.log(text);
+    }
+
+    const onDateChange = (event, selectedDate) => {
+        setDate(new Date(selectedDate));
     }
 
     return (
         <Background>
-            <BackButton goBack={navigation.goBack}/>
+            <BackButton goBack={navigation.goBack()}/>
             <Header color={theme.colors.primary}>Add new product</Header>
             <Image style={styles.product_image} source={demoProduct}/>
             <Header
@@ -51,7 +57,7 @@ export default function NewProduct({navigation}) {
             <TextInput
                 label="Name"
                 onChangeText={onNameChange}
-                value={name}
+                value={text}
             />
             <Header
                 fontSize={21}
@@ -77,6 +83,17 @@ const styles = StyleSheet.create({
     container: {
         width: 300,
         alignItems: 'center'
+    },
+    textContainer: {
+        width: '100%',
+        marginVertical: 12,
+    },
+    input: {
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+        backgroundColor: theme.colors.surface,
     },
     datepicker: {
         width: 400,

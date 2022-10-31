@@ -34,15 +34,6 @@ export default function ProductsList({navigation}) {
         navigation.navigate('NewProduct');
     }
 
-    const onDeleteAllPress = () => {
-        realm.write(() => {
-            realm.deleteAll();
-        });
-    }
-    const logItmes = () => {
-       console.log(items)
-    }
-
     return (
         <View style={styles.container}>
             <StatusBar
@@ -57,7 +48,7 @@ export default function ProductsList({navigation}) {
                 <FlatList
                     data={items}
                     renderItem={({item}) =>
-                        <ProductItem name={item.name} imageUrl={item.imageUrl} expirationDate={item.expirationDate}/>
+                        <ProductItem item={item} />
                     }
                     ItemSeparatorComponent={renderSeparator}
                     keyExtractor={item => item._id.toString()}
@@ -67,14 +58,6 @@ export default function ProductsList({navigation}) {
                 <TouchableOpacity
                     onPress={onPlusPress}>
                     <Image style={styles.buttonPlus} source={btnPlus}/>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={onDeleteAllPress}>
-                    <Image style={styles.buttonPlus} source={warning}/>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={logItmes}>
-                    <Image style={styles.buttonPlus} source={warning}/>
                 </TouchableOpacity>
             </View>
         </View>
@@ -87,7 +70,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     logoContainer: {
-        paddingTop: 35,
+        paddingTop: 40,
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',

@@ -1,14 +1,14 @@
 import {Realm} from "@realm/react";
 export class Food extends Realm.Object {
   _id: Realm.BSON.ObjectId;
-  name: string;
+  foodName: string;
   imageUrl: string;
   expirationDate: Date;
 
   static generate(name, expirationDate, imageUrl) {
     return {
       _id: new Realm.BSON.ObjectId(),
-      name,
+      foodName: name,
       expirationDate,
       imageUrl,
     };
@@ -19,7 +19,7 @@ export class Food extends Realm.Object {
     primaryKey: "_id",
     properties: {
       _id: "objectId",
-      name: "string",
+      foodName: "string",
       expirationDate: "date",
       imageUrl: "string",
     },
