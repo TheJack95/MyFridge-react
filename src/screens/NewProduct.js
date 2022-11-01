@@ -8,22 +8,23 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import {Image, StyleSheet, View} from "react-native";
 import {Food} from "../models/Food";
 import {RealmContext} from "../models";
-import demoProduct from '../assets/foods/cake.png'
+import demoProduct from '../assets/foods/healthy-food.png'
 import {theme} from "../core/theme";
 import {schedulePushNotification} from "../helpers/notificationsHelper";
 
 export default function NewProduct({navigation}) {
     const [text, setText] = useState('');
     const [date, setDate] = useState(new Date());
+    const [imgName, setImgName] = useState('healthy-food');
 
     const {useRealm} = RealmContext;
     const realm = useRealm();
     const handleAddFood = () => {
         realm.write(() => {
-            let food = Food.generate(text, date, 'cake');
+            let food = Food.generate(text, date, '', imgName);
             realm.create('Food', food);
             let notificationDate = new Date(date);
-            notificationDate.setHours(15, 40);
+            notificationDate.setHours(9, 0);
             schedulePushNotification(
                 "Food notification", text +" in scadenza", notificationDate
             ).then(value => navigation.goBack())

@@ -6,6 +6,7 @@ import { Entypo } from '@expo/vector-icons';
 import {theme} from "../core/theme";
 import {RectButton, Swipeable} from "react-native-gesture-handler";
 import {RealmContext} from "../models";
+import {IMAGES} from "../constants/images";
 
 const Screen = {
     width: Dimensions.get('window').width,
@@ -13,7 +14,7 @@ const Screen = {
 }
 
 export default function ProductItem(props) {
-    const {foodName, imageUrl, expirationDate} = props.item;
+    const {foodName, imageUrl, imgName, expirationDate} = props.item;
     const {useRealm} = RealmContext;
     const realm = useRealm();
     let swipeableRow: Swipeable;
@@ -23,10 +24,13 @@ export default function ProductItem(props) {
     }
 
     const getImage = () => {
-		if(imageUrl)
-	   		return require('../assets/foods/cake-small.png');
+		if(imgName)
+	   		return IMAGES[imgName];
+
+        if(imageUrl)
+            return {uri: imageUrl};
 		
-		return require('../assets/foods/fish-small.png');
+		return require('../assets/foods/healthy-food.png');
     }
 
     const isNearExpirationDate = () => {
@@ -96,17 +100,17 @@ export default function ProductItem(props) {
             onSwipeableOpen={doSwipeOperation}
         >
             <View style={styles.product}>
-                <Image source={getImage()} />
-                <View style={styles.product_detail}>
-                    <View style={styles.product_detail_header}>
-                        <Text style={styles.product_name} numberOfLines={2} ellipsizeMode='tail'>
+                <Image source={getImage()} style={styles.productImage}/>
+                <View style={styles.productDetail}>
+                    <View style={styles.productDetailHeader}>
+                        <Text style={styles.productName} numberOfLines={2} ellipsizeMode='tail'>
                             {foodName}
                         </Text>
                         {isNearExpirationDate()}
                     </View>
-                    <View style={styles.product_detail_footer}>
-                        <View style={styles.product_exp_date_container}>
-                            <Text style={styles.product_expiration_date}>
+                    <View style={styles.productDetailFooter}>
+                        <View style={styles.productExpDateContainer}>
+                            <Text style={styles.productExpirationDate}>
                                 Expiration date: {getDate()}
                             </Text>
                         </View>
@@ -131,37 +135,33 @@ const styles = StyleSheet.create({
         flex: 1,
         height: Screen.height - 122,
     },
-    product_detail: {
+    productDetail: {
         justifyContent: 'space-around',
         marginLeft: 10,
         flexDirection: 'column',
         flex: 1,
     },
-    product_detail_header: {
+    productDetailHeader: {
         alignItems: 'center',
         justifyContent: 'space-between',
         flexDirection: 'row',
     },
-    product_name: {
+    productName: {
         color: theme.colors.text,
         fontSize: 20,
         width: 180,
     },
-    product_favorite: {
-        width: 24,
-        height: 24,
-    },
-    product_detail_footer: {
+    productDetailFooter: {
         alignItems: 'center',
         justifyContent: 'space-between',
         flexDirection: 'row',
     },
-    product_exp_date_container: {
+    productExpDateContainer: {
         justifyContent: 'flex-start',
         alignItems: 'center',
         flexDirection: 'row'
     },
-    product_expiration_date: {
+    productExpirationDate: {
         color: theme.colors.text,
         fontSize: 15,
     },
@@ -181,4 +181,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
     },
+    productImage: {
+        width: 70,
+        height: 70,
+    }
 })
