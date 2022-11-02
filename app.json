@@ -19,14 +19,17 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "io.android.myfridge"
+      "bundleIdentifier": "it.corro.myfridge",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to scan barcodes."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "io.android.myfridge"
+      "package": "it.corro.myfridge"
     },
     "web": {
       "favicon": "./assets/favicon.png"

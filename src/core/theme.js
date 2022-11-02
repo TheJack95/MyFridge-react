@@ -1,4 +1,10 @@
 import { DefaultTheme } from 'react-native-paper'
+import {Dimensions, StyleSheet} from "react-native";
+
+const Screen = {
+  width: Dimensions.get('window').width,
+  height: Dimensions.get('window').height
+}
 
 export const theme = {
   ...DefaultTheme,
@@ -13,3 +19,35 @@ export const theme = {
     success: '#7AC439',
   },
 }
+
+export const commonStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  logoContainer: {
+    paddingTop: 40,
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.primary,
+    width: Screen.width,
+  },
+  content: {
+    width: Screen.width,
+    flex: 1,
+  },
+  body: {
+    flex: 1,
+    marginBottom: 56,
+  },
+  bottomBarContainer: {
+    backgroundColor: theme.colors.primary,
+    flexDirection: "row",
+    justifyContent: "space-around"
+  },
+  iconContainer: {
+    margin: 20,
+  },
+})
