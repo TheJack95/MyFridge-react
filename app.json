@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "MyFridge-react",
-    "slug": "MyFridge-react",
+    "name": "My Fridge",
+    "slug": "my-fridge",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,7 +21,8 @@
       "supportsTablet": true,
       "bundleIdentifier": "it.corro.myfridge",
       "infoPlist": {
-        "NSCameraUsageDescription": "This app uses the camera to scan barcodes."
+        "NSCameraUsageDescription": "This app uses the camera to scan barcodes.",
+        "CFBundleAllowMixedLocalizations": true
       }
     },
     "android": {

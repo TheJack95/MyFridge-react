@@ -9,6 +9,7 @@ import {RealmContext} from "../models";
 import {Food} from "../models/Food";
 import Paragraph from "../components/Paragraph";
 import Logo from "../components/Logo";
+import i18n from "../core/translations";
 
 export default function ProductsList({navigation}) {
     const {useQuery} = RealmContext;
@@ -42,14 +43,14 @@ export default function ProductsList({navigation}) {
                 barStyle={'light-content'}
             />
             <View style={commonStyles.logoContainer}>
-                <Header>My Fridge</Header>
+                <Header>{i18n.t('appName')}</Header>
             </View>
             { items.length === 0 && (
                 <View style={[commonStyles.container, {alignItems: "center"}]}>
                     <Logo/>
-                    <Header color={theme.colors.primary}>No items yet</Header>
-                    <Paragraph>Scan a product barcode</Paragraph>
-                    <Paragraph>Or add one by clicking the "+" button!</Paragraph>
+                    <Header color={theme.colors.primary}>{i18n.t('noItems')}</Header>
+                    <Paragraph>{i18n.t('paragraph1')}</Paragraph>
+                    <Paragraph>{i18n.t('paragraph2')}</Paragraph>
                 </View>
             )}
             <View style={commonStyles.content}>

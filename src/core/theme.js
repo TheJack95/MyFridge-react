@@ -50,4 +50,10 @@ export const commonStyles = StyleSheet.create({
   iconContainer: {
     margin: 20,
   },
+  buttonContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 50,
+  },
 })

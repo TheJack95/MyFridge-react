@@ -11,6 +11,7 @@ import {RealmContext} from "../models";
 import demoProduct from '../assets/foods/healthy-food.png'
 import {theme} from "../core/theme";
 import {schedulePushNotification} from "../helpers/NotificationsHelper";
+import i18n from "../core/translations";
 
 export default function NewProduct({navigation, route}) {
     const [text, setText] = useState('');
@@ -58,20 +59,19 @@ export default function NewProduct({navigation, route}) {
     }
 
     const getImage = () => {
-        console.log(imageUrl)
         if(imageUrl) return {uri: imageUrl};
         return demoProduct;
     }
 
     return (
         <Background>
-            <Header color={theme.colors.primary}>Add new product</Header>
-            <Image style={styles.product_image} source={getImage()}/>
+            <Header color={theme.colors.primary}>{i18n.t('addNewProduct')}</Header>
+            <Image style={styles.productImage} source={getImage()}/>
             <Header
                 fontSize={21}
                 color={theme.colors.primary}
             >
-                Product name
+                {i18n.t('productName')}
             </Header>
             <TextInput
                 label="Name"
@@ -81,7 +81,7 @@ export default function NewProduct({navigation, route}) {
             <Header
                 fontSize={21}
                 color={theme.colors.primary}
-            >Expiration Date</Header>
+            >{i18n.t('expirationDate')}</Header>
             <View style={styles.container}>
                 <DateTimePicker
                     value={date}
@@ -93,11 +93,11 @@ export default function NewProduct({navigation, route}) {
                 />
             </View>
             <View style={styles.buttonContainer}>
-                <Button mode="contained" style={{backgroundColor: theme.colors.secondary, flex: 1}} onPress={() => navigation.navigate("ProductsList")}>
-                    Cancel
+                <Button mode="contained" style={[{backgroundColor: theme.colors.secondary}, styles.button]} onPress={() => navigation.navigate("ProductsList")}>
+                    {i18n.t('cancel')}
                 </Button>
-                <Button mode="contained" style={{flex: 1}} onPress={handleAddFood}>
-                    Save
+                <Button mode="contained" style={styles.button} onPress={handleAddFood}>
+                    {i18n.t('save')}
                 </Button>
             </View>
         </Background>
@@ -131,8 +131,12 @@ const styles = StyleSheet.create({
         margin: 0,
         padding: 0
     },
-    product_image: {
+    productImage: {
         width: 100,
         height: 100,
+    },
+    button: {
+        flex: 1,
+        margin: 10,
     }
 });

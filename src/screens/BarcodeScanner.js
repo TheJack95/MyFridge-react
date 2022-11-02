@@ -7,6 +7,7 @@ import getProductByBarcode from "../helpers/BarcodeScannerHelper";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import { MaterialIcons } from '@expo/vector-icons';
 import {commonStyles, theme} from "../core/theme";
+import i18n from "../core/translations";
 
 export default function BarcodeScanner({navigation}) {
     const [hasPermission, setHasPermission] = useState(null);
@@ -20,7 +21,6 @@ export default function BarcodeScanner({navigation}) {
 
     const handleBarCodeScanned = ({ type, data }) => {
         setScanned(true);
-        console.log(`Bar code with type ${type} and data ${data} has been scanned!`)
         getProductByBarcode(data).then( response => {
             navigation.navigate("NewProduct", {name: response.name, imgUrl: response.imgUrl})
         });
@@ -45,7 +45,7 @@ export default function BarcodeScanner({navigation}) {
                 barStyle={'light-content'}
             />
             <View style={commonStyles.logoContainer}>
-                <Header>Scan Product</Header>
+                <Header>{i18n.t('scanProduct')}</Header>
             </View>
             <View style={commonStyles.content}>
                 <BarCodeScanner
@@ -53,7 +53,7 @@ export default function BarcodeScanner({navigation}) {
                     style={StyleSheet.absoluteFillObject}
                 />
                 <Button mode="outlined" style={styles.buttonClose} onPress={() => navigation.navigate("ProductsList")}>
-                    Close
+                    {i18n.t('close')}
                 </Button>
             </View>
             <View style={commonStyles.bottomBarContainer}>
@@ -74,7 +74,6 @@ export default function BarcodeScanner({navigation}) {
 const styles = StyleSheet.create({
     buttonClose: {
         position: "absolute",
-        bottom: 0
+        bottom: 0,
     }
-    }
-);
+});

@@ -7,6 +7,7 @@ import {theme} from "../core/theme";
 import {RectButton, Swipeable} from "react-native-gesture-handler";
 import {RealmContext} from "../models";
 import {IMAGES} from "../constants/images";
+import i18n from "../core/translations";
 
 const Screen = {
     width: Dimensions.get('window').width,
@@ -111,7 +112,7 @@ export default function ProductItem(props) {
                     <View style={styles.productDetailFooter}>
                         <View style={styles.productExpDateContainer}>
                             <Text style={styles.productExpirationDate}>
-                                Expiration date: {getDate()}
+                                {i18n.t('expirationDate')}: {getDate()}
                             </Text>
                         </View>
                     </View>
