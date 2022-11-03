@@ -37,8 +37,6 @@ export const commonStyles = StyleSheet.create({
   content: {
     width: Screen.width,
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   body: {
     flex: 1,

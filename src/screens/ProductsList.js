@@ -36,7 +36,7 @@ export default function ProductsList({navigation}) {
     }
 
     const renderNoItems = () => {
-        return <View style={commonStyles.content}>
+        return <View style={[commonStyles.content, styles.noItems]}>
             <Logo/>
             <Header color={theme.colors.primary}>{i18n.t('noItems')}</Header>
             <Paragraph>{i18n.t('paragraph1')}</Paragraph>
@@ -81,5 +81,12 @@ export default function ProductsList({navigation}) {
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    noItems: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
+})
 
 
