@@ -12,11 +12,12 @@ import demoProduct from '../assets/foods/healthy-food.png'
 import {theme} from "../core/theme";
 import {schedulePushNotification} from "../helpers/NotificationsHelper";
 import i18n from "../core/translations";
+import ImageSelection from "./ImageSelection";
 
 export default function NewProduct({navigation, route}) {
     const [text, setText] = useState('');
     const [date, setDate] = useState(new Date());
-    const [imageUrl, setImageUrl] = useState(null);
+    const [imageUrl, setImageUrl] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
 
 

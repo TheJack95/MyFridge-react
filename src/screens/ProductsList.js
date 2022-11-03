@@ -35,6 +35,15 @@ export default function ProductsList({navigation}) {
         navigation.navigate('BarcodeScanner');
     }
 
+    const renderNoItems = () => {
+        return <View style={commonStyles.content}>
+            <Logo/>
+            <Header color={theme.colors.primary}>{i18n.t('noItems')}</Header>
+            <Paragraph>{i18n.t('paragraph1')}</Paragraph>
+            <Paragraph>{i18n.t('paragraph2')}</Paragraph>
+        </View>;
+    }
+
     return (
         <View style={commonStyles.container}>
             <StatusBar
@@ -45,25 +54,20 @@ export default function ProductsList({navigation}) {
             <View style={commonStyles.logoContainer}>
                 <Header>{i18n.t('appName')}</Header>
             </View>
-            { items.length === 0 && (
-                <View style={[commonStyles.container, {alignItems: "center"}]}>
-                    <Logo/>
-                    <Header color={theme.colors.primary}>{i18n.t('noItems')}</Header>
-                    <Paragraph>{i18n.t('paragraph1')}</Paragraph>
-                    <Paragraph>{i18n.t('paragraph2')}</Paragraph>
+            { items.length === 0 && renderNoItems()}
+            { items.length > 0 &&
+                <View style={commonStyles.content}>
+                    <FlatList
+                        data={items}
+                        renderItem={({item}) =>
+                            <ProductItem item={item}/>
+                        }
+                        ItemSeparatorComponent={renderSeparator}
+                        keyExtractor={item => item._id.toString()}
+                        showsVerticalScrollIndicator
+                    />
                 </View>
-            )}
-            <View style={commonStyles.content}>
-                <FlatList
-                    data={items}
-                    renderItem={({item}) =>
-                        <ProductItem item={item} />
-                    }
-                    ItemSeparatorComponent={renderSeparator}
-                    keyExtractor={item => item._id.toString()}
-                    showsVerticalScrollIndicator
-                />
-            </View>
+            }
             <View style={commonStyles.bottomBarContainer}>
                 <TouchableOpacity
                     onPress={onScanPress} style={commonStyles.iconContainer}>

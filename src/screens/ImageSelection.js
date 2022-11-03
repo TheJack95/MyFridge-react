@@ -16,7 +16,7 @@ export default function ImageSelection({onImgSelection, setModalVisible, modalVi
     return (
         <Modal
             animationType="slide"
-            transparent={false}
+            transparent={true}
             visible={modalVisible}
             onRequestClose={() => {
                 setModalVisible(!modalVisible);
