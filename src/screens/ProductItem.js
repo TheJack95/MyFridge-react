@@ -8,6 +8,7 @@ import {RectButton, Swipeable} from "react-native-gesture-handler";
 import {RealmContext} from "../models";
 import {IMAGES} from "../constants/images";
 import i18n from "../core/translations";
+import {removeNotification} from "../helpers/NotificationsHelper";
 
 const Screen = {
     width: Dimensions.get('window').width,
@@ -87,6 +88,7 @@ export default function ProductItem(props) {
 
     const doSwipeOperation = (direction) => {
         realm.write(() => {
+            removeNotification(props.item.notificationId);
             realm.delete(props.item);
         });
     }

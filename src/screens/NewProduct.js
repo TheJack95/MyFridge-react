@@ -34,13 +34,15 @@ export default function NewProduct({navigation, route}) {
     const realm = useRealm();
     const handleAddFood = () => {
         realm.write(() => {
-            let food = Food.generate(text, date, imageUrl, imageName);
-            realm.create('Food', food);
             let notificationDate = new Date(date);
             notificationDate.setHours(9, 0);
             schedulePushNotification(
                 "Food notification", text +" in scadenza", notificationDate
-            ).then(value => navigation.navigate('ProductsList'))
+            ).then(notificationId => {
+                let food = Food.generate(text, date, imageUrl, imageName, notificationId);
+                realm.create('Food', food);
+                navigation.navigate('ProductsList')
+            })
             .catch(error => {
                 console.error("Error scheduling notification: ", error);
                 navigation.navigate('ProductsList');
