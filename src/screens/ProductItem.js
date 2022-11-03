@@ -15,7 +15,7 @@ const Screen = {
 }
 
 export default function ProductItem(props) {
-    const {foodName, imageUrl, imgName, expirationDate} = props.item;
+    const {foodName, imageUrl, imageName, expirationDate} = props.item;
     const {useRealm} = RealmContext;
     const realm = useRealm();
     let swipeableRow: Swipeable;
@@ -25,8 +25,8 @@ export default function ProductItem(props) {
     }
 
     const getImage = () => {
-		if(imgName)
-	   		return IMAGES[imgName];
+		if(imageName && IMAGES[imageName])
+	   		return IMAGES[imageName];
 
         if(imageUrl)
             return {uri: imageUrl};

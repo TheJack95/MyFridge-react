@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import BackButton from "../components/BackButton";
 import Background from "../components/Background";
 import Header from "../components/Header";
 import TextInput from "../components/TextInput";
@@ -13,11 +12,13 @@ import {theme} from "../core/theme";
 import {schedulePushNotification} from "../helpers/NotificationsHelper";
 import i18n from "../core/translations";
 import ImageSelection from "./ImageSelection";
+import {IMAGES} from "../constants/images";
 
 export default function NewProduct({navigation, route}) {
     const [text, setText] = useState('');
     const [date, setDate] = useState(new Date());
     const [imageUrl, setImageUrl] = useState('');
+    const [imageName, setImageName] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
 
 
@@ -33,7 +34,7 @@ export default function NewProduct({navigation, route}) {
     const realm = useRealm();
     const handleAddFood = () => {
         realm.write(() => {
-            let food = Food.generate(text, date, imageUrl, 'healthy-food');
+            let food = Food.generate(text, date, imageUrl, imageName);
             realm.create('Food', food);
             let notificationDate = new Date(date);
             notificationDate.setHours(9, 0);
@@ -55,12 +56,14 @@ export default function NewProduct({navigation, route}) {
         setDate(new Date(selectedDate));
     }
 
-    const onImageSelect = (selectedImg) => {
-        food.imageName = new Date(selectedImg);
+    const onImgSelection = (selectedImg) => {
+        setImageName(selectedImg);
+        setModalOpen(false);
     }
 
     const getImage = () => {
-        if(imageUrl) return {uri: imageUrl};
+        if(imageUrl.length > 0) return {uri: imageUrl};
+        if(imageName) return IMAGES[imageName];
         return demoProduct;
     }
 
@@ -68,6 +71,7 @@ export default function NewProduct({navigation, route}) {
         <Background>
             <Header color={theme.colors.primary}>{i18n.t('addNewProduct')}</Header>
             <Image style={styles.productImage} source={getImage()}/>
+            {imageUrl.length === 0 && <ImageSelection onImgSelection={onImgSelection} setModalVisible={setModalOpen} modalVisible={modalOpen} /> }
             <Header
                 fontSize={21}
                 color={theme.colors.primary}
@@ -135,6 +139,7 @@ const styles = StyleSheet.create({
     productImage: {
         width: 100,
         height: 100,
+        marginBottom: 20
     },
     button: {
         flex: 1,

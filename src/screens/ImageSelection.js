@@ -1,53 +1,64 @@
 import React from 'react'
-import {FlatList, Image, StyleSheet, TouchableOpacity, View} from "react-native";
+import {FlatList, Image, StyleSheet, TouchableOpacity, View, Modal} from "react-native";
 import {IMAGES, IMAGE_NAMES} from "../constants/images";
-import {Modal} from "react-native-web";
+import {theme} from "../core/theme";
+import i18n from "../core/translations";
+import Header from "../components/Header";
+import Button from "../components/Button";
 
 export default function ImageSelection({onImgSelection, setModalVisible, modalVisible}) {
-
-    const renderSeparator = () => {
-        return ( <View style={{height: "100%"}} /> );
-    };
 
     const getImage = (img) => {
         return IMAGES[img];
     }
 
     return (
-        <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-                setModalVisible(!modalVisible);
-            }}
-        >
-            <View style={styles.modalView}>
-                <FlatList
-                    data={IMAGE_NAMES}
-                    renderItem={({item}) =>
-                        <TouchableOpacity onPress={onImgSelection(item)}>
-                            <Image source={getImage(item)} style={styles.productImage} />
-                        </TouchableOpacity>
-                    }
-                    ItemSeparatorComponent={renderSeparator}
-                    keyExtractor={item => item}
-                />
-            </View>
-        </Modal>
+        <View>
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
+                <Header fontSize={15} color={theme.colors.primary}>{i18n.t('changeImage')}</Header>
+            </TouchableOpacity>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                <View style={styles.modalView}>
+                    <Header color={theme.colors.primary}>{i18n.t('selectImage')}</Header>
+                    <FlatList
+                        data={IMAGE_NAMES}
+                        renderItem={({item}) =>
+                            <TouchableOpacity onPress={() => onImgSelection(item)}>
+                                <Image source={getImage(item)} style={styles.imageListItem} />
+                            </TouchableOpacity>
+                        }
+                        keyExtractor={item => item}
+                        numColumns={3}
+                    />
+                    <Button style={styles.button} mode="contained" onPress={() => setModalVisible(false)}>
+                        {i18n.t('close')}
+                    </Button>
+                </View>
+            </Modal>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
-    content: {
-        height: 100,
-    },
     productImage: {
         width: 100,
         height: 100,
     },
+    imageListItem: {
+        width: 70,
+        height: 70,
+        margin: 10
+    },
     modalView: {
         margin: 20,
+        marginTop: 100,
         backgroundColor: "white",
         borderRadius: 20,
         padding: 35,
@@ -61,4 +72,7 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5
     },
+    button: {
+        marginTop: 30
+    }
 });

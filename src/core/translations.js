@@ -15,7 +15,9 @@ const translations = {
         close: 'Close',
         save: 'Save',
         name: 'Name',
-        itemNotFound: 'Item not found. Retry or add it manually.'
+        itemNotFound: 'Item not found. Retry or add it manually.',
+        selectImage: 'Select image',
+        changeImage: 'Change image'
     },
     it: {
         appName: 'Il Mio Frigo',
@@ -30,7 +32,9 @@ const translations = {
         close: 'Chiudi',
         save: 'Salva',
         name: 'Nome',
-        itemNotFound: 'Nessun prodotto trovato. Riprova o aggiungine uno manualmente.'
+        itemNotFound: 'Nessun prodotto trovato. Riprova o aggiungine uno manualmente.',
+        selectImage: 'Seleziona immagine',
+        changeImage: 'Cambia immagine'
     },
 };
 const i18n = new I18n(translations, {defaultLocale: 'en', locale: Localization.locale});
