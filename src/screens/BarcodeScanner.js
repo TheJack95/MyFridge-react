@@ -4,15 +4,16 @@ import React, {useEffect, useState} from "react";
 import Header from "../components/Header";
 import Button from "../components/Button";
 import getProductByBarcode from "../helpers/BarcodeScannerHelper";
-import {MaterialCommunityIcons} from "@expo/vector-icons";
+import {AntDesign, MaterialCommunityIcons} from "@expo/vector-icons";
 import {MaterialIcons} from '@expo/vector-icons';
 import theme, {commonStyles} from "../core/theme";
 import i18n from "../core/translations";
+import TopToolbar from "../components/TopToolbar";
 
 export default function BarcodeScanner({navigation}) {
     const [hasPermission, setHasPermission] = useState(null);
-    const [scanned, setScanned] = useState(true);
-    const [notFound, setNotFound] = useState(true);
+    const [scanned, setScanned] = useState(false);
+    const [notFound, setNotFound] = useState(false);
 
     useEffect(() => {
         BarCodeScanner.requestPermissionsAsync().then(response => {
@@ -42,7 +43,9 @@ export default function BarcodeScanner({navigation}) {
     }
 
     const renderNoItemFound = () => {
-        return <Header color={theme.colors.secondary} fontSize={20}>{i18n.t('itemNotFound')}</Header>;
+        return <View style={[commonStyles.content, styles.noItems]}>
+            <Header color={theme.colors.secondary} fontSize={20}>{i18n.t('itemNotFound')}</Header>
+        </View>
     }
 
     const onScanPress = () => {
@@ -50,16 +53,13 @@ export default function BarcodeScanner({navigation}) {
         setNotFound(false);
     }
 
+    const onPlusPress = () => {
+
+    }
+
     return (
         <View style={commonStyles.container}>
-            <StatusBar
-                animated={true}
-                backgroundColor="#61dafb"
-                barStyle={'light-content'}
-            />
-            <View style={commonStyles.logoContainer}>
-                <Header>{i18n.t('scanProduct')}</Header>
-            </View>
+            <TopToolbar title={i18n.t('scanProduct')} rightIcon='back' onBackPress={navigation.goBack}/>
             <View style={commonStyles.content}>
                 {!notFound &&
                     <BarCodeScanner
@@ -68,28 +68,44 @@ export default function BarcodeScanner({navigation}) {
                     />
                 }
                 { notFound && renderNoItemFound()}
-                <Button mode="outlined" style={styles.buttonClose} onPress={() => navigation.navigate("ProductsList")}>
-                    {i18n.t('close')}
-                </Button>
+                <View style={styles.buttonContainer}>
+                    <Button mode="outlined" onPress={() => navigation.navigate("ProductsList")}>
+                        {i18n.t('close')}
+                    </Button>
+                    <Button mode="contained" onPress={onScanPress}>
+                        {i18n.t('save')}
+                    </Button>
+                </View>
             </View>
             <View style={commonStyles.bottomBarContainer}>
-                {scanned && <TouchableOpacity
-                    onPress={onScanPress()} style={commonStyles.iconContainer}>
-                    <MaterialCommunityIcons name="barcode-scan" size={40} color={theme.colors.onPrimary}/>
-                </TouchableOpacity>
-                }
                 <TouchableOpacity
                     onPress={onListItemPress} style={commonStyles.iconContainer}>
                     <MaterialIcons name="list-alt" size={40} color={theme.colors.onPrimary}/>
                 </TouchableOpacity>
+                {scanned &&
+                    <TouchableOpacity
+                        onPress={onPlusPress} style={commonStyles.iconContainer}>
+                        <AntDesign name="pluscircleo" size={40} color={theme.colors.onPrimary} />
+                    </TouchableOpacity>
+                }
             </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    buttonClose: {
+    buttonContainer: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: 50,
         position: "absolute",
         bottom: 0,
+    },
+    buttonClose: {
+    },
+    noItems: {
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 });

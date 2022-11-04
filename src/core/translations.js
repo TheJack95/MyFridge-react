@@ -27,7 +27,7 @@ const translations = {
         expirationDate: 'Data di scadenza',
         productName: 'Nome del prodotto',
         addNewProduct:'Nuovo prodotto',
-        scanProduct: 'Scansiona prodotto',
+        scanProduct: 'Scansiona',
         cancel: 'Annulla',
         close: 'Chiudi',
         save: 'Salva',

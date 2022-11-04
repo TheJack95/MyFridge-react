@@ -113,9 +113,6 @@ export const commonStyles = StyleSheet.create({
   },
   logoContainer: {
     paddingTop: 40,
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: theme.colors.primary,
     width: Screen.width,
   },

@@ -12,6 +12,7 @@ import {schedulePushNotification} from "../helpers/NotificationsHelper";
 import i18n from "../core/translations";
 import ImageSelection from "./ImageSelection";
 import {IMAGES} from "../constants/images";
+import TopToolbar from "../components/TopToolbar";
 
 export default function NewProduct({navigation, route}) {
     const [text, setText] = useState('');
@@ -70,13 +71,7 @@ export default function NewProduct({navigation, route}) {
 
     return (
         <View style={commonStyles.container}>
-            <StatusBar
-                animated={true}
-                backgroundColor={theme.colors.primary}
-            />
-            <View style={commonStyles.logoContainer}>
-                <Header>{i18n.t('addNewProduct')}</Header>
-            </View>
+            <TopToolbar title={i18n.t('addNewProduct')} rightIcon='back' onBackPress={navigation.goBack}/>
             <View style={[commonStyles.content, styles.container]}>
                 <Image style={styles.productImage} source={getImage()}/>
                 {imageUrl.length === 0 && <ImageSelection onImgSelection={onImgSelection} setModalVisible={setModalOpen} modalVisible={modalOpen} /> }

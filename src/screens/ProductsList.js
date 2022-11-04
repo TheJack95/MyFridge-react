@@ -10,6 +10,7 @@ import {Food} from "../models/Food";
 import Paragraph from "../components/Paragraph";
 import Logo from "../components/Logo";
 import i18n from "../core/translations";
+import TopToolbar from "../components/TopToolbar";
 
 export default function ProductsList({navigation}) {
     const {useQuery} = RealmContext;
@@ -46,13 +47,7 @@ export default function ProductsList({navigation}) {
 
     return (
         <View style={commonStyles.container}>
-            <StatusBar
-                animated={true}
-                backgroundColor={theme.colors.primary}
-            />
-            <View style={commonStyles.logoContainer}>
-                <Header>{i18n.t('appName')}</Header>
-            </View>
+            <TopToolbar title={i18n.t('appName')} />
             { items.length === 0 && renderNoItems()}
             { items.length > 0 &&
                 <View style={commonStyles.content}>
