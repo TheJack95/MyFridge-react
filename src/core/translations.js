@@ -18,7 +18,8 @@ const translations = {
         itemNotFound: 'Item not found. Retry or add it manually.',
         selectImage: 'Select image',
         changeImage: 'Change image',
-        retry: 'Retry'
+        retry: 'Retry',
+        settings: 'Settings',
     },
     it: {
         appName: 'Il Mio Frigo',
@@ -36,7 +37,8 @@ const translations = {
         itemNotFound: 'Nessun prodotto trovato. Riprova o aggiungine uno manualmente.',
         selectImage: 'Seleziona immagine',
         changeImage: 'Cambia immagine',
-        retry: 'Riprova'
+        retry: 'Riprova',
+        settings: 'Impostazioni',
     },
 };
 const i18n = new I18n(translations, {defaultLocale: 'en', locale: Localization.locale});

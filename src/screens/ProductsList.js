@@ -11,10 +11,24 @@ import Paragraph from "../components/Paragraph";
 import Logo from "../components/Logo";
 import i18n from "../core/translations";
 import TopToolbar from "../components/TopToolbar";
+import {Searchbar} from "react-native-paper";
 
 export default function ProductsList({navigation}) {
     const {useQuery} = RealmContext;
     const items = useQuery(Food);
+    const [searchQuery, setSearchQuery] = React.useState('');
+    const [searchBarOpen, setSearchBarOpen] = React.useState(false);
+    const [itemsSearched, setItemsSearched] = React.useState(items);
+
+    const onChangeSearch = (query) => {
+        if(query.length === 0)  {
+            setItemsSearched(items);
+        } else {
+            setSearchQuery(query);
+            const result = items.find(item => item.foodName.includes(query));
+            setItemsSearched(result);
+        }
+    };
 
     const renderSeparator = () => {
         return (
@@ -47,12 +61,23 @@ export default function ProductsList({navigation}) {
 
     return (
         <View style={commonStyles.container}>
-            <TopToolbar title={i18n.t('appName')} />
+            <TopToolbar
+                title={i18n.t('appName')}
+                rightIcon='magnify'
+                rightIconPress={() => setSearchBarOpen(!searchBarOpen)}
+            />
+            { searchBarOpen &&
+                <Searchbar
+                    placeholder="Search"
+                    onChangeText={onChangeSearch}
+                    value={searchQuery}
+                />
+            }
             { items.length === 0 && renderNoItems()}
             { items.length > 0 &&
                 <View style={commonStyles.content}>
                     <FlatList
-                        data={items}
+                        data={itemsSearched}
                         renderItem={({item}) =>
                             <ProductItem item={item}/>
                         }

@@ -71,7 +71,7 @@ export default function NewProduct({navigation, route}) {
 
     return (
         <View style={commonStyles.container}>
-            <TopToolbar title={i18n.t('addNewProduct')} rightIcon='back' onBackPress={navigation.goBack}/>
+            <TopToolbar title={i18n.t('addNewProduct')} leftIcon='back' leftIconPress={navigation.goBack}/>
             <View style={[commonStyles.content, styles.container]}>
                 <Image style={styles.productImage} source={getImage()}/>
                 {imageUrl.length === 0 && <ImageSelection onImgSelection={onImgSelection} setModalVisible={setModalOpen} modalVisible={modalOpen} /> }

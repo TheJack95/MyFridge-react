@@ -9,11 +9,12 @@ type TopToolbarProps = {
     title: string;
     leftIcon?: string;
     rightIcon?: string;
-    onBackPress?: () => {}
+    rightIconPress?: () => {};
+    leftIconPress?: () => {};
 }
 
 export default function TopToolbar(props: TopToolbarProps) {
-    const { title, leftIcon, rightIcon, onBackPress } = props;
+    const { title, leftIcon, rightIcon, onBackPress,rightIconPress, leftIconPress} = props;
     return (
         <View>
             <StatusBar
@@ -22,10 +23,10 @@ export default function TopToolbar(props: TopToolbarProps) {
             />
             <View style={commonStyles.logoContainer}>
                 <Appbar.Header>
-                    { rightIcon === 'back' && <Appbar.BackAction onPress={onBackPress} />}
-                    { rightIcon && rightIcon !== 'back' && <Appbar.Action icon={rightIcon} onPress={() => {}}/>}
+                    { leftIcon === 'back' && <Appbar.BackAction onPress={leftIconPress} />}
+                    { leftIcon && leftIcon !== 'back' && <Appbar.Action icon={leftIcon} onPress={leftIconPress}/>}
                     <Appbar.Content title={<Header>{title}</Header>}/>
-                    { leftIcon && <Appbar.Action icon={leftIcon} onPress={() => {}}/>}
+                    { rightIcon && <Appbar.Action icon={rightIcon} onPress={rightIconPress}/>}
                 </Appbar.Header>
             </View>
         </View>
