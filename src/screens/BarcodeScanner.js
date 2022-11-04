@@ -75,12 +75,12 @@ export default function BarcodeScanner({navigation}) {
             <View style={commonStyles.bottomBarContainer}>
                 {scanned && <TouchableOpacity
                     onPress={onScanPress()} style={commonStyles.iconContainer}>
-                    <MaterialCommunityIcons name="barcode-scan" size={40} color={theme.colors.light}/>
+                    <MaterialCommunityIcons name="barcode-scan" size={40} color={theme.colors.onPrimary}/>
                 </TouchableOpacity>
                 }
                 <TouchableOpacity
                     onPress={onListItemPress} style={commonStyles.iconContainer}>
-                    <MaterialIcons name="list-alt" size={40} color={theme.colors.light}/>
+                    <MaterialIcons name="list-alt" size={40} color={theme.colors.onPrimary}/>
                 </TouchableOpacity>
             </View>
         </View>

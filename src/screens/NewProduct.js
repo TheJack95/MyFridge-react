@@ -103,6 +103,7 @@ export default function NewProduct({navigation, route}) {
                         display="spinner"
                         style={styles.datepicker}
                         minimumDate={new Date()}
+                        textColor={theme.colors.onBackground}
                     />
                 </View>
                 <View style={styles.buttonContainer}>

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Provider, useTheme, Provider as PaperProvider,} from 'react-native-paper'
+import {Provider} from 'react-native-paper'
 import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import theme from './src/core/theme'
@@ -23,23 +23,21 @@ export default function App() {
     });
 
     return (
-        <PaperProvider theme={theme}>
-            <RealmProvider>
-                <Provider theme={theme}>
-                    <NavigationContainer>
-                        <Stack.Navigator
-                            initialRouteName="ProductsList"
-                            screenOptions={{
-                                headerShown: false,
-                            }}
-                        >
-                            <Stack.Screen name="ProductsList" component={ProductsList}/>
-                            <Stack.Screen name="NewProduct" component={NewProduct}/>
-                            <Stack.Screen name="BarcodeScanner" component={BarcodeScanner}/>
-                        </Stack.Navigator>
-                    </NavigationContainer>
-                </Provider>
-            </RealmProvider>
-        </PaperProvider>
+        <RealmProvider>
+            <Provider theme={theme}>
+                <NavigationContainer>
+                    <Stack.Navigator
+                        initialRouteName="ProductsList"
+                        screenOptions={{
+                            headerShown: false,
+                        }}
+                    >
+                        <Stack.Screen name="ProductsList" component={ProductsList}/>
+                        <Stack.Screen name="NewProduct" component={NewProduct}/>
+                        <Stack.Screen name="BarcodeScanner" component={BarcodeScanner}/>
+                    </Stack.Navigator>
+                </NavigationContainer>
+            </Provider>
+        </RealmProvider>
     )
 }

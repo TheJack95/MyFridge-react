@@ -71,7 +71,7 @@ const darkTheme = {
     "onError": "rgb(105, 0, 5)",
     "errorContainer": "rgb(147, 0, 10)",
     "onErrorContainer": "rgb(255, 180, 171)",
-    "background": "rgba(28,27,30,0.82)",
+    "background": "rgb(67,64,72)",
     "onBackground": "rgb(230, 225, 230)",
     "surface": "rgb(28, 27, 30)",
     "onSurface": "rgb(230, 225, 230)",
