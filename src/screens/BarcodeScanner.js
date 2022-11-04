@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import Header from "../components/Header";
 import Button from "../components/Button";
 import getProductByBarcode from "../helpers/BarcodeScannerHelper";
-import {AntDesign, MaterialCommunityIcons} from "@expo/vector-icons";
+import {AntDesign} from "@expo/vector-icons";
 import {MaterialIcons} from '@expo/vector-icons';
 import theme, {commonStyles} from "../core/theme";
 import i18n from "../core/translations";
@@ -12,8 +12,8 @@ import TopToolbar from "../components/TopToolbar";
 
 export default function BarcodeScanner({navigation}) {
     const [hasPermission, setHasPermission] = useState(null);
-    const [scanned, setScanned] = useState(false);
-    const [notFound, setNotFound] = useState(false);
+    const [scanned, setScanned] = useState(true);
+    const [notFound, setNotFound] = useState(true);
 
     useEffect(() => {
         BarCodeScanner.requestPermissionsAsync().then(response => {
@@ -43,12 +43,17 @@ export default function BarcodeScanner({navigation}) {
     }
 
     const renderNoItemFound = () => {
-        return <View style={[commonStyles.content, styles.noItems]}>
-            <Header color={theme.colors.secondary} fontSize={20}>{i18n.t('itemNotFound')}</Header>
-        </View>
+        return (
+            <View style={[commonStyles.content, styles.noItems]}>
+                <Header color={theme.colors.secondary} fontSize={20}>{i18n.t('itemNotFound')}</Header>
+                <Button mode="contained" style={styles.retryButton} onPress={onRetryPress}>
+                    {i18n.t('retry')}
+                </Button>
+            </View>
+        )
     }
 
-    const onScanPress = () => {
+    const onRetryPress = () => {
         setScanned(false);
         setNotFound(false);
     }
@@ -68,14 +73,9 @@ export default function BarcodeScanner({navigation}) {
                     />
                 }
                 { notFound && renderNoItemFound()}
-                <View style={styles.buttonContainer}>
-                    <Button mode="outlined" onPress={() => navigation.navigate("ProductsList")}>
-                        {i18n.t('close')}
-                    </Button>
-                    <Button mode="contained" onPress={onScanPress}>
-                        {i18n.t('save')}
-                    </Button>
-                </View>
+                <Button mode="contained" style={styles.buttonClose} onPress={() => navigation.navigate("ProductsList")}>
+                    {i18n.t('close')}
+                </Button>
             </View>
             <View style={commonStyles.bottomBarContainer}>
                 <TouchableOpacity
@@ -94,18 +94,16 @@ export default function BarcodeScanner({navigation}) {
 }
 
 const styles = StyleSheet.create({
-    buttonContainer: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginTop: 50,
+    buttonClose: {
         position: "absolute",
         bottom: 0,
-    },
-    buttonClose: {
+        backgroundColor: theme.colors.secondary,
     },
     noItems: {
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    retryButton: {
+        width: "50%"
     }
 });
