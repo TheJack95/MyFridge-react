@@ -15,12 +15,14 @@ import {IMAGES} from "../constants/images";
 import TopToolbar from "../components/TopToolbar";
 
 export default function NewProduct({navigation, route}) {
+    const {useRealm} = RealmContext;
+    const realm = useRealm();
+
     const [text, setText] = useState('');
     const [date, setDate] = useState(new Date());
     const [imageUrl, setImageUrl] = useState('');
     const [imageName, setImageName] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
-
 
     useEffect(() => {
         if(route?.params?.name) {
@@ -30,24 +32,23 @@ export default function NewProduct({navigation, route}) {
         }
     }, []);
 
-    const {useRealm} = RealmContext;
-    const realm = useRealm();
     const handleAddFood = () => {
-        realm.write(() => {
-            let notificationDate = new Date(date);
-            notificationDate.setHours(9, 0);
-            schedulePushNotification(
-                "Food notification", text +" in scadenza", notificationDate
-            ).then(notificationId => {
-                let food = Food.generate(text, date, imageUrl, imageName, notificationId);
+        let notificationDate = new Date(date);
+        notificationDate.setHours(9, 0);
+        schedulePushNotification(
+            "Food notification", text +" in scadenza", notificationDate
+        ).then(notificationId => {
+            let food = Food.generate(text, date, imageUrl, imageName, notificationId);
+            realm.write(() => {
                 realm.create('Food', food);
-                navigation.navigate('ProductsList')
-            })
-            .catch(error => {
-                console.error("Error scheduling notification: ", error);
                 navigation.navigate('ProductsList');
-            })
-        });
+            });
+        })
+        .catch(error => {
+            console.error("Error scheduling notification: ", error);
+            navigation.navigate('ProductsList');
+        })
+
     }
 
     const onNameChange = (value) => {

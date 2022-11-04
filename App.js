@@ -11,17 +11,17 @@ import * as Notifications from "expo-notifications";
 
 const Stack = createStackNavigator()
 
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+    }),
+});
+
 export default function App() {
 
     const {RealmProvider} = RealmContext;
-
-    Notifications.setNotificationHandler({
-        handleNotification: async () => ({
-            shouldShowAlert: true,
-            shouldPlaySound: true,
-            shouldSetBadge: true,
-        }),
-    });
 
     return (
         <RealmProvider>

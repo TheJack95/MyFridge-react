@@ -38,7 +38,7 @@ export default function ProductItem(props) {
     const isNearExpirationDate = () => {
         const today = new Date();
         if(expirationDate <= today)
-            return <AntDesign name="closecircle" size={30} color={theme.colors.error} />;
+            return <AntDesign name="closecircle" size={30} color={theme.colors.errorIcon} />;
 
         const diffTime = Math.abs(expirationDate - today);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -87,10 +87,11 @@ export default function ProductItem(props) {
     };
 
     const doSwipeOperation = (direction) => {
-        realm.write(() => {
-            removeNotification(props.item.notificationId);
-            realm.delete(props.item);
-        });
+        removeNotification(props.item.notificationId).then(() => {
+            realm.write(() => {
+                realm.delete(props.item);
+            });
+        }).catch(error => console.error(error));
     }
 
     return (

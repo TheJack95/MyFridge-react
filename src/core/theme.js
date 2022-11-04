@@ -1,7 +1,7 @@
 import { DefaultTheme } from 'react-native-paper'
 import {Appearance, Dimensions, StyleSheet} from "react-native";
 
-const Screen = {
+export const Screen = {
   width: Dimensions.get('window').width,
   height: Dimensions.get('window').height
 }
@@ -48,7 +48,10 @@ const lightTheme = {
     },
     "surfaceDisabled": "rgba(28, 27, 30, 0.12)",
     "onSurfaceDisabled": "rgba(28, 27, 30, 0.38)",
-    "backdrop": "rgba(50, 47, 56, 0.4)"
+    "backdrop": "rgba(50, 47, 56, 0.4)",
+    errorIcon: '#cb1331',
+    warning: '#E47F28',
+    success: '#7AC439',
   }
 }
 
@@ -94,7 +97,10 @@ const darkTheme = {
     },
     "surfaceDisabled": "rgba(230, 225, 230, 0.12)",
     "onSurfaceDisabled": "rgba(230, 225, 230, 0.38)",
-    "backdrop": "rgba(50, 47, 56, 0.4)"
+    "backdrop": "rgba(50, 47, 56, 0.4)",
+    errorIcon: '#cb1331',
+    warning: '#E47F28',
+    success: '#7AC439',
   }
 }
 
@@ -119,6 +125,7 @@ export const commonStyles = StyleSheet.create({
   content: {
     width: Screen.width,
     flex: 1,
+    zIndex: -1
   },
   body: {
     flex: 1,

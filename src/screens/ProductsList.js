@@ -1,34 +1,21 @@
 import React from 'react'
 import ProductItem from './ProductItem'
-import {FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Header from "../components/Header";
-import theme, {commonStyles} from "../core/theme";
+import theme, {commonStyles, Screen} from "../core/theme";
 import {RealmContext} from "../models";
 import {Food} from "../models/Food";
 import Paragraph from "../components/Paragraph";
 import Logo from "../components/Logo";
 import i18n from "../core/translations";
 import TopToolbar from "../components/TopToolbar";
-import {Searchbar} from "react-native-paper";
+import {FlashList} from "@shopify/flash-list";
 
 export default function ProductsList({navigation}) {
     const {useQuery} = RealmContext;
     const items = useQuery(Food);
-    const [searchQuery, setSearchQuery] = React.useState('');
-    const [searchBarOpen, setSearchBarOpen] = React.useState(false);
-    const [itemsSearched, setItemsSearched] = React.useState(items);
-
-    const onChangeSearch = (query) => {
-        if(query.length === 0)  {
-            setItemsSearched(items);
-        } else {
-            setSearchQuery(query);
-            const result = items.find(item => item.foodName.includes(query));
-            setItemsSearched(result);
-        }
-    };
 
     const renderSeparator = () => {
         return (
@@ -63,27 +50,19 @@ export default function ProductsList({navigation}) {
         <View style={commonStyles.container}>
             <TopToolbar
                 title={i18n.t('appName')}
-                rightIcon='magnify'
-                rightIconPress={() => setSearchBarOpen(!searchBarOpen)}
             />
-            { searchBarOpen &&
-                <Searchbar
-                    placeholder="Search"
-                    onChangeText={onChangeSearch}
-                    value={searchQuery}
-                />
-            }
             { items.length === 0 && renderNoItems()}
             { items.length > 0 &&
                 <View style={commonStyles.content}>
-                    <FlatList
-                        data={itemsSearched}
+                    <FlashList
+                        data={items}
                         renderItem={({item}) =>
                             <ProductItem item={item}/>
                         }
                         ItemSeparatorComponent={renderSeparator}
                         keyExtractor={item => item._id.toString()}
-                        showsVerticalScrollIndicator
+                        estimatedItemSize={100}
+                        estimatedListSize={{height: Screen.height, width: Screen.width}}
                     />
                 </View>
             }

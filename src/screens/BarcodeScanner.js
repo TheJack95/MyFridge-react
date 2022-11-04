@@ -12,8 +12,8 @@ import TopToolbar from "../components/TopToolbar";
 
 export default function BarcodeScanner({navigation}) {
     const [hasPermission, setHasPermission] = useState(null);
-    const [scanned, setScanned] = useState(true);
-    const [notFound, setNotFound] = useState(true);
+    const [scanned, setScanned] = useState(false);
+    const [notFound, setNotFound] = useState(false);
 
     useEffect(() => {
         BarCodeScanner.requestPermissionsAsync().then(response => {
@@ -64,7 +64,7 @@ export default function BarcodeScanner({navigation}) {
 
     return (
         <View style={commonStyles.container}>
-            <TopToolbar title={i18n.t('scanProduct')} rightIcon='back' onBackPress={navigation.goBack}/>
+            <TopToolbar title={i18n.t('scanProduct')} leftIcon='back' leftIconPress={navigation.goBack}/>
             <View style={commonStyles.content}>
                 {!notFound &&
                     <BarCodeScanner
