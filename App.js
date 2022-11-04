@@ -5,6 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack'
 import theme from './src/core/theme'
 import {BarcodeScanner, ProductsList,} from './src/screens'
 import NewProduct from "./src/screens/NewProduct";
+import Settings from "./src/screens/Settings";
 import {RealmContext} from './src/models';
 import * as Notifications from "expo-notifications";
 
@@ -35,6 +36,7 @@ export default function App() {
                         <Stack.Screen name="ProductsList" component={ProductsList}/>
                         <Stack.Screen name="NewProduct" component={NewProduct}/>
                         <Stack.Screen name="BarcodeScanner" component={BarcodeScanner}/>
+                        <Stack.Screen name="Settings" component={Settings}/>
                     </Stack.Navigator>
                 </NavigationContainer>
             </Provider>
