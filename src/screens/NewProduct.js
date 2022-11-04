@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import Background from "../components/Background";
 import Header from "../components/Header";
 import TextInput from "../components/TextInput";
 import Button from "../components/Button";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Image, StyleSheet, View} from "react-native";
+import {Image, StatusBar, StyleSheet, View} from "react-native";
 import {Food} from "../models/Food";
 import {RealmContext} from "../models";
 import demoProduct from '../assets/foods/healthy-food.png'
-import {theme} from "../core/theme";
+import theme, {commonStyles} from "../core/theme";
 import {schedulePushNotification} from "../helpers/NotificationsHelper";
 import i18n from "../core/translations";
 import ImageSelection from "./ImageSelection";
@@ -70,51 +69,64 @@ export default function NewProduct({navigation, route}) {
     }
 
     return (
-        <Background>
-            <Header color={theme.colors.primary}>{i18n.t('addNewProduct')}</Header>
-            <Image style={styles.productImage} source={getImage()}/>
-            {imageUrl.length === 0 && <ImageSelection onImgSelection={onImgSelection} setModalVisible={setModalOpen} modalVisible={modalOpen} /> }
-            <Header
-                fontSize={21}
-                color={theme.colors.primary}
-            >
-                {i18n.t('productName')}
-            </Header>
-            <TextInput
-                label="Name"
-                onChangeText={onNameChange}
-                value={text}
+        <View style={commonStyles.container}>
+            <StatusBar
+                animated={true}
+                backgroundColor={theme.colors.primary}
             />
-            <Header
-                fontSize={21}
-                color={theme.colors.primary}
-            >{i18n.t('expirationDate')}</Header>
-            <View style={styles.container}>
-                <DateTimePicker
-                    value={date}
-                    mode="date"
-                    onChange={onDateChange}
-                    display="spinner"
-                    style={styles.datepicker}
-                    minimumDate={new Date()}
+            <View style={commonStyles.logoContainer}>
+                <Header>{i18n.t('addNewProduct')}</Header>
+            </View>
+            <View style={[commonStyles.content, styles.container]}>
+                <Image style={styles.productImage} source={getImage()}/>
+                {imageUrl.length === 0 && <ImageSelection onImgSelection={onImgSelection} setModalVisible={setModalOpen} modalVisible={modalOpen} /> }
+                <Header
+                    fontSize={21}
+                    color={theme.colors.primary}
+                >
+                    {i18n.t('productName')}
+                </Header>
+                <TextInput
+                    label={i18n.t('name')}
+                    onChangeText={onNameChange}
+                    value={text}
                 />
+                <Header
+                    fontSize={21}
+                    color={theme.colors.primary}
+                >{i18n.t('expirationDate')}</Header>
+                <View style={styles.dateContainer}>
+                    <DateTimePicker
+                        value={date}
+                        mode="date"
+                        onChange={onDateChange}
+                        display="spinner"
+                        style={styles.datepicker}
+                        minimumDate={new Date()}
+                    />
+                </View>
+                <View style={styles.buttonContainer}>
+                    <Button mode="contained" style={[{backgroundColor: theme.colors.secondary}, styles.button]} onPress={() => navigation.navigate("ProductsList")}>
+                        {i18n.t('cancel')}
+                    </Button>
+                    <Button mode="contained" style={styles.button} onPress={handleAddFood}>
+                        {i18n.t('save')}
+                    </Button>
+                </View>
             </View>
-            <View style={styles.buttonContainer}>
-                <Button mode="contained" style={[{backgroundColor: theme.colors.secondary}, styles.button]} onPress={() => navigation.navigate("ProductsList")}>
-                    {i18n.t('cancel')}
-                </Button>
-                <Button mode="contained" style={styles.button} onPress={handleAddFood}>
-                    {i18n.t('save')}
-                </Button>
-            </View>
-        </Background>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    dateContainer: {
         width: 300,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     textContainer: {
         width: '100%',
@@ -126,17 +138,11 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         marginTop: 50,
     },
-    input: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-        backgroundColor: theme.colors.surface,
-    },
     datepicker: {
         width: 400,
         margin: 0,
-        padding: 0
+        padding: 0,
+        color: theme.colors.primary
     },
     productImage: {
         width: 100,

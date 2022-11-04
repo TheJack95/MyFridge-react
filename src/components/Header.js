@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import { Text } from 'react-native-paper'
-import { theme } from '../core/theme'
+import theme from '../core/theme'
 
 type HeaderProps = {
   fontSize?: number;
@@ -10,7 +10,7 @@ type HeaderProps = {
 
 export default function Header(props: HeaderProps) {
   const fontSize = props.fontSize ?? 30;
-  const color = props.color ?? theme.colors.light
+  const color = props.color ?? theme.colors.onPrimary
   return <Text
       style={styles(fontSize,color).header} {...props} />
 }

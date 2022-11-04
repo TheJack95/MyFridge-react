@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { TextInput as Input } from 'react-native-paper'
-import { theme } from '../core/theme'
+import theme from '../core/theme'
 
 export default function TextInput({ errorText, description, ...props }) {
   return (
@@ -9,8 +9,10 @@ export default function TextInput({ errorText, description, ...props }) {
       <Input
         style={styles.input}
         selectionColor={theme.colors.primary}
-        underlineColor="transparent"
         mode="outlined"
+        theme={{ colors: { placeholder: theme.colors.primary, text: theme.colors.onBackground } }}
+        underlineColorAndroid={theme.colors.primary}
+        underlineColor={theme.colors.primary}
         {...props}
       />
       {description && !errorText ? (
@@ -23,15 +25,14 @@ export default function TextInput({ errorText, description, ...props }) {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: '80%',
     marginVertical: 12,
   },
   input: {
-    backgroundColor: theme.colors.surface,
+    backgroundColor: theme.colors.background,
   },
   description: {
     fontSize: 13,
-    color: theme.colors.secondary,
     paddingTop: 8,
   },
   error: {

@@ -3,7 +3,7 @@ import {Dimensions, Image, StyleSheet, Text, View, Animated, I18nManager} from '
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
-import {theme} from "../core/theme";
+import theme from "../core/theme";
 import {RectButton, Swipeable} from "react-native-gesture-handler";
 import {RealmContext} from "../models";
 import {IMAGES} from "../constants/images";

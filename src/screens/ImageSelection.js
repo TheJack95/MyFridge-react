@@ -1,7 +1,7 @@
 import React from 'react'
 import {FlatList, Image, StyleSheet, TouchableOpacity, View, Modal} from "react-native";
 import {IMAGES, IMAGE_NAMES} from "../constants/images";
-import {theme} from "../core/theme";
+import theme from "../core/theme";
 import i18n from "../core/translations";
 import Header from "../components/Header";
 import Button from "../components/Button";

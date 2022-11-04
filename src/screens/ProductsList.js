@@ -4,7 +4,7 @@ import {FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View} from 'rea
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Header from "../components/Header";
-import {theme, commonStyles} from "../core/theme";
+import theme, {commonStyles} from "../core/theme";
 import {RealmContext} from "../models";
 import {Food} from "../models/Food";
 import Paragraph from "../components/Paragraph";
@@ -38,7 +38,7 @@ export default function ProductsList({navigation}) {
     const renderNoItems = () => {
         return <View style={[commonStyles.content, styles.noItems]}>
             <Logo/>
-            <Header color={theme.colors.primary}>{i18n.t('noItems')}</Header>
+            <Header color={theme.colors.onBackground}>{i18n.t('noItems')}</Header>
             <Paragraph>{i18n.t('paragraph1')}</Paragraph>
             <Paragraph>{i18n.t('paragraph2')}</Paragraph>
         </View>;
@@ -48,8 +48,7 @@ export default function ProductsList({navigation}) {
         <View style={commonStyles.container}>
             <StatusBar
                 animated={true}
-                backgroundColor="#61dafb"
-                barStyle={'light-content'}
+                backgroundColor={theme.colors.primary}
             />
             <View style={commonStyles.logoContainer}>
                 <Header>{i18n.t('appName')}</Header>
@@ -71,11 +70,11 @@ export default function ProductsList({navigation}) {
             <View style={commonStyles.bottomBarContainer}>
                 <TouchableOpacity
                     onPress={onScanPress} style={commonStyles.iconContainer}>
-                    <MaterialCommunityIcons name="barcode-scan" size={40} color={theme.colors.light} />
+                    <MaterialCommunityIcons name="barcode-scan" size={40} color={theme.colors.onPrimary} />
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={onPlusPress} style={commonStyles.iconContainer}>
-                    <AntDesign name="pluscircleo" size={40} color={theme.colors.light} />
+                    <AntDesign name="pluscircleo" size={40} color={theme.colors.onPrimary} />
                 </TouchableOpacity>
             </View>
         </View>

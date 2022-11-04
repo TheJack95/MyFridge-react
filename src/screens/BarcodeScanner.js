@@ -6,9 +6,8 @@ import Button from "../components/Button";
 import getProductByBarcode from "../helpers/BarcodeScannerHelper";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {MaterialIcons} from '@expo/vector-icons';
-import {commonStyles, theme} from "../core/theme";
+import theme, {commonStyles} from "../core/theme";
 import i18n from "../core/translations";
-import Paragraph from "../components/Paragraph";
 
 export default function BarcodeScanner({navigation}) {
     const [hasPermission, setHasPermission] = useState(null);
