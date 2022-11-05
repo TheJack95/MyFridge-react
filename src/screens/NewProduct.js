@@ -12,7 +12,6 @@ import {schedulePushNotification} from "../helpers/NotificationsHelper";
 import i18n from "../core/translations";
 import ImageSelection from "./ImageSelection";
 import {IMAGES} from "../constants/images";
-import TopToolbar from "../components/TopToolbar";
 
 export default function NewProduct({navigation, route}) {
     const {useRealm} = RealmContext;
@@ -72,7 +71,6 @@ export default function NewProduct({navigation, route}) {
 
     return (
         <View style={commonStyles.container}>
-            <TopToolbar title={i18n.t('addNewProduct')} leftIcon='back' leftIconPress={navigation.goBack}/>
             <View style={[commonStyles.content, styles.container]}>
                 <Image style={styles.productImage} source={getImage()}/>
                 {imageUrl.length === 0 && <ImageSelection onImgSelection={onImgSelection} setModalVisible={setModalOpen} modalVisible={modalOpen} /> }
@@ -134,6 +132,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         marginTop: 50,
+        marginBottom: 30
     },
     datepicker: {
         width: 400,

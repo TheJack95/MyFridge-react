@@ -1,15 +1,16 @@
 import React from 'react'
-import {Provider} from 'react-native-paper'
 import {NavigationContainer} from '@react-navigation/native'
-import {createStackNavigator} from '@react-navigation/stack'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import theme from './src/core/theme'
 import {BarcodeScanner, ProductsList,} from './src/screens'
 import NewProduct from "./src/screens/NewProduct";
-import Settings from "./src/screens/Settings";
 import {RealmContext} from './src/models';
 import * as Notifications from "expo-notifications";
+import {AntDesign, Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
+import i18n from "./src/core/translations";
+import {Provider} from "react-native-paper";
 
-const Stack = createStackNavigator()
+const Tab = createBottomTabNavigator();
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -25,19 +26,61 @@ export default function App() {
 
     return (
         <RealmProvider>
-            <Provider theme={theme}>
-                <NavigationContainer>
-                    <Stack.Navigator
-                        initialRouteName="ProductsList"
-                        screenOptions={{
-                            headerShown: false,
-                        }}
+            <Provider>
+                <NavigationContainer theme={theme}>
+                    <Tab.Navigator
+                        screenOptions={({ route }) => ({
+                            headerStyle: {
+                                backgroundColor: theme.colors.primary
+                            },
+                            headerTitleStyle: {
+                                fontSize: 30,
+                                color: theme.colors.onPrimary,
+                                fontWeight: 'bold',
+                            },
+                            tabBarStyle: {
+                                backgroundColor: theme.colors.primary,
+                            },
+                            tabBarActiveTintColor: theme.colors.onPrimaryContainer,
+                            tabBarInactiveTintColor: theme.colors.onPrimary,
+                            tabBarIcon: ({ focused, color, size }) => {
+                                console.log(focused)
+                                let iconName;
+                                switch (route.name) {
+                                    case 'NewProduct':
+                                        iconName = "plussquare";
+                                        break;
+                                    case 'BarcodeScanner':
+                                        iconName = "barcode-scan";
+                                        break;
+                                    default:
+                                        iconName = 'home';
+                                }
+                                let iconColor = focused ? theme.colors.onPrimaryContainer : theme.colors.onPrimary;
+                                return iconName === 'plussquare' ?
+                                    <AntDesign name="plussquare" size={40} color={iconColor} /> :
+                                    <MaterialCommunityIcons name={iconName} size={40} color={iconColor} />;
+                            }
+                        })}
                     >
-                        <Stack.Screen name="ProductsList" component={ProductsList}/>
-                        <Stack.Screen name="NewProduct" component={NewProduct}/>
-                        <Stack.Screen name="BarcodeScanner" component={BarcodeScanner}/>
-                        <Stack.Screen name="Settings" component={Settings}/>
-                    </Stack.Navigator>
+                        <Tab.Screen
+                            name="ProductsList"
+                            component={ProductsList}
+                            options={{
+                                title: i18n.t('appName'),
+                            }}
+                        />
+                        <Tab.Screen
+                            name="NewProduct"
+                            component={NewProduct}
+                            options={{title: i18n.t('addNewProduct')}}
+                        />
+                        <Tab.Screen
+                            name="BarcodeScanner"
+                            component={BarcodeScanner}
+                            options={{title: i18n.t('scanProduct')}}
+                        />
+                    </Tab.Navigator>
                 </NavigationContainer>
             </Provider>
         </RealmProvider>

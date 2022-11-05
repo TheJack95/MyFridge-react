@@ -137,7 +137,10 @@ export const commonStyles = StyleSheet.create({
     justifyContent: "space-around"
   },
   iconContainer: {
-    margin: 20,
+    width: "20%",
+    marginTop: 10,
+    marginBottom: 20,
+    alignItems: "center"
   },
   buttonContainer: {
     display: "flex",

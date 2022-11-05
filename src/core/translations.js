@@ -20,6 +20,8 @@ const translations = {
         changeImage: 'Change image',
         retry: 'Retry',
         settings: 'Settings',
+        search: 'Search',
+        home: 'Home'
     },
     it: {
         appName: 'Il Mio Frigo',
@@ -39,6 +41,8 @@ const translations = {
         changeImage: 'Cambia immagine',
         retry: 'Riprova',
         settings: 'Impostazioni',
+        search: 'Cerca',
+        home: 'Home'
     },
 };
 const i18n = new I18n(translations, {defaultLocale: 'en', locale: Localization.locale});

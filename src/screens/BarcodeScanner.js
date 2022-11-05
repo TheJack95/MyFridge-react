@@ -1,14 +1,11 @@
-import {Text, View, StyleSheet, StatusBar, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import {BarCodeScanner} from 'expo-barcode-scanner';
 import React, {useEffect, useState} from "react";
 import Header from "../components/Header";
 import Button from "../components/Button";
 import getProductByBarcode from "../helpers/BarcodeScannerHelper";
-import {AntDesign} from "@expo/vector-icons";
-import {MaterialIcons} from '@expo/vector-icons';
 import theme, {commonStyles} from "../core/theme";
 import i18n from "../core/translations";
-import TopToolbar from "../components/TopToolbar";
 
 export default function BarcodeScanner({navigation}) {
     const [hasPermission, setHasPermission] = useState(null);
@@ -64,7 +61,6 @@ export default function BarcodeScanner({navigation}) {
 
     return (
         <View style={commonStyles.container}>
-            <TopToolbar title={i18n.t('scanProduct')} leftIcon='back' leftIconPress={navigation.goBack}/>
             <View style={commonStyles.content}>
                 {!notFound &&
                     <BarCodeScanner
@@ -73,21 +69,6 @@ export default function BarcodeScanner({navigation}) {
                     />
                 }
                 { notFound && renderNoItemFound()}
-                <Button mode="contained" style={styles.buttonClose} onPress={() => navigation.navigate("ProductsList")}>
-                    {i18n.t('close')}
-                </Button>
-            </View>
-            <View style={commonStyles.bottomBarContainer}>
-                <TouchableOpacity
-                    onPress={onListItemPress} style={commonStyles.iconContainer}>
-                    <MaterialIcons name="list-alt" size={40} color={theme.colors.onPrimary}/>
-                </TouchableOpacity>
-                {scanned &&
-                    <TouchableOpacity
-                        onPress={onPlusPress} style={commonStyles.iconContainer}>
-                        <AntDesign name="pluscircleo" size={40} color={theme.colors.onPrimary} />
-                    </TouchableOpacity>
-                }
             </View>
         </View>
     );
