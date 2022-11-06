@@ -17,6 +17,7 @@ const Screen = {
 
 export default function ProductItem(props) {
     const {foodName, imageUrl, imageName, expirationDate} = props.item;
+    const {moreInfo} = props.renderMoreInfo;
     const {useRealm} = RealmContext;
     const realm = useRealm();
     let swipeableRow: Swipeable;
@@ -89,7 +90,13 @@ export default function ProductItem(props) {
     const doSwipeOperation = (direction) => {
         removeNotification(props.item.notificationId).then(() => {
             realm.write(() => {
-                realm.delete(props.item);
+                if(!moreInfo) {
+                    realm.delete(props.item);
+                } else {
+                    const food = realm.objectForPrimaryKey("Food", props.item._id);
+                    food.inFridge = false;
+                    food.expirationDate = null;
+                }
             });
         }).catch(error => console.error(error));
     }
@@ -110,15 +117,17 @@ export default function ProductItem(props) {
                         <Text style={styles.productName} numberOfLines={2} ellipsizeMode='tail'>
                             {foodName}
                         </Text>
-                        {isNearExpirationDate()}
+                        {moreInfo && isNearExpirationDate()}
                     </View>
-                    <View style={styles.productDetailFooter}>
-                        <View style={styles.productExpDateContainer}>
-                            <Text style={styles.productExpirationDate}>
-                                {i18n.t('expirationDate')}: {getDate()}
-                            </Text>
+                    { moreInfo &&
+                        <View style={styles.productDetailFooter}>
+                            <View style={styles.productExpDateContainer}>
+                                <Text style={styles.productExpirationDate}>
+                                    {i18n.t('expirationDate')}: {getDate()}
+                                </Text>
+                            </View>
                         </View>
-                    </View>
+                    }
                 </View>
             </View>
         </Swipeable>

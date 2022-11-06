@@ -125,7 +125,6 @@ export const commonStyles = StyleSheet.create({
   content: {
     width: Screen.width,
     flex: 1,
-    zIndex: -1
   },
   body: {
     flex: 1,

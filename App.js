@@ -30,6 +30,8 @@ export default function App() {
                 <NavigationContainer theme={theme}>
                     <Tab.Navigator
                         screenOptions={({ route }) => ({
+                            initialRouteName: 'ProductsList',
+                            unmountOnBlur: true,
                             headerStyle: {
                                 backgroundColor: theme.colors.primary
                             },

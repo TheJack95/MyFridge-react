@@ -3,15 +3,17 @@ import Header from "../components/Header";
 import TextInput from "../components/TextInput";
 import Button from "../components/Button";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Image, StatusBar, StyleSheet, View} from "react-native";
+import {Image, StyleSheet, Text, View} from "react-native";
+import {Switch} from "react-native-paper";
 import {Food} from "../models/Food";
 import {RealmContext} from "../models";
 import demoProduct from '../assets/foods/healthy-food.png'
-import theme, {commonStyles} from "../core/theme";
+import theme, {commonStyles, Screen} from "../core/theme";
 import {schedulePushNotification} from "../helpers/NotificationsHelper";
 import i18n from "../core/translations";
 import ImageSelection from "./ImageSelection";
 import {IMAGES} from "../constants/images";
+import Paragraph from "../components/Paragraph";
 
 export default function NewProduct({navigation, route}) {
     const {useRealm} = RealmContext;
@@ -22,6 +24,7 @@ export default function NewProduct({navigation, route}) {
     const [imageUrl, setImageUrl] = useState('');
     const [imageName, setImageName] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
+    const [isSwitchOn, setIsSwitchOn] = React.useState(true);
 
     useEffect(() => {
         if(route?.params?.name) {
@@ -37,7 +40,7 @@ export default function NewProduct({navigation, route}) {
         schedulePushNotification(
             "Food notification", text +" in scadenza", notificationDate
         ).then(notificationId => {
-            let food = Food.generate(text, date, imageUrl, imageName, notificationId);
+            let food = Food.generate(text, date, imageUrl, imageName, notificationId, isSwitchOn);
             realm.write(() => {
                 realm.create('Food', food);
                 navigation.navigate('ProductsList');
@@ -68,6 +71,8 @@ export default function NewProduct({navigation, route}) {
         if(imageName) return IMAGES[imageName];
         return demoProduct;
     }
+
+    const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
     return (
         <View style={commonStyles.container}>
@@ -100,6 +105,10 @@ export default function NewProduct({navigation, route}) {
                         textColor={theme.colors.onBackground}
                     />
                 </View>
+                <View style={styles.switchContainer}>
+                    <Paragraph style={styles.switchText}>{i18n.t('addToFridge')}</Paragraph>
+                    <Switch value={isSwitchOn} onValueChange={onToggleSwitch} color={theme.colors.primary}/>
+                </View>
                 <View style={styles.buttonContainer}>
                     <Button mode="contained" style={[{backgroundColor: theme.colors.secondary}, styles.button]} onPress={() => navigation.navigate("ProductsList")}>
                         {i18n.t('cancel')}
@@ -131,10 +140,13 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        marginTop: 50,
-        marginBottom: 30
+        marginTop: 20,
+    },
+    switchContainer: {
+        flexDirection: "row"
     },
     datepicker: {
+        height: 180,
         width: 400,
         margin: 0,
         padding: 0,
@@ -148,5 +160,12 @@ const styles = StyleSheet.create({
     button: {
         flex: 1,
         margin: 10,
+    },
+    switchText: {
+        alignSelf: 'center',
+        marginHorizontal: 30,
+        fontSize: 20,
+        color: theme.colors.primary,
+        fontWeight: "bold"
     }
 });

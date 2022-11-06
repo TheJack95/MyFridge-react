@@ -6,15 +6,17 @@ export class Food extends Realm.Object {
   imageName: string;
   expirationDate: Date;
   notificationId: string;
+  inFridge: boolean;
 
-  static generate(name, expirationDate, imageUrl, imageName, notificationId) {
+  static generate(name, expirationDate, imageUrl, imageName, notificationId, inFridge) {
     return {
       _id: new Realm.BSON.ObjectId(),
       foodName: name,
       expirationDate,
       imageName,
       imageUrl,
-      notificationId
+      notificationId,
+      inFridge,
     };
   }
 
@@ -28,6 +30,7 @@ export class Food extends Realm.Object {
       imageUrl: "string",
       imageName: "string",
       notificationId: "string",
+      inFridge: "bool",
     },
   };
 }
