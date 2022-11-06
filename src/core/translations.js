@@ -21,7 +21,9 @@ const translations = {
         retry: 'Retry',
         settings: 'Settings',
         search: 'Search',
-        home: 'Home'
+        home: 'Home',
+        myProducts: 'My products',
+        addToFridge: 'Add to My Fridge'
     },
     it: {
         appName: 'Il Mio Frigo',
@@ -42,7 +44,9 @@ const translations = {
         retry: 'Riprova',
         settings: 'Impostazioni',
         search: 'Cerca',
-        home: 'Home'
+        home: 'Home',
+        myProducts: 'I miei articoli',
+        addToFridge: 'Aggiungi al mio frigo'
     },
 };
 const i18n = new I18n(translations, {defaultLocale: 'en', locale: Localization.locale});
