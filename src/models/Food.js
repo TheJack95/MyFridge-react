@@ -4,7 +4,7 @@ export class Food extends Realm.Object {
   foodName: string;
   imageUrl: string;
   imageName: string;
-  expirationDate: Date;
+  expirationDate:? Date;
   notificationId: string;
   inFridge: boolean;
 
@@ -26,7 +26,7 @@ export class Food extends Realm.Object {
     properties: {
       _id: "objectId",
       foodName: "string",
-      expirationDate: "date",
+      expirationDate: "date?",
       imageUrl: "string",
       imageName: "string",
       notificationId: "string",

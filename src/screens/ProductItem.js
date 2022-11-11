@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, Image, StyleSheet, Text, View, Animated, I18nManager} from 'react-native';
+import {Dimensions, Image, StyleSheet, Text, View, Animated, I18nManager, TouchableOpacity} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
@@ -16,14 +16,15 @@ const Screen = {
 }
 
 export default function ProductItem(props) {
-    const {foodName, imageUrl, imageName, expirationDate} = props.item;
-    const {moreInfo} = props.renderMoreInfo;
+    const {foodName, imageUrl, imageName, expirationDate, notificationId, inFridge} = props.item;
+    const {renderMoreInfo} = props;
+    const {onAddToMyFridge} = props;
     const {useRealm} = RealmContext;
     const realm = useRealm();
     let swipeableRow: Swipeable;
 
     const getDate = () => {
-        return expirationDate.toLocaleDateString();
+        return expirationDate?.toLocaleDateString();
     }
 
     const getImage = () => {
@@ -88,9 +89,9 @@ export default function ProductItem(props) {
     };
 
     const doSwipeOperation = (direction) => {
-        removeNotification(props.item.notificationId).then(() => {
+        removeNotification(notificationId).then(() => {
             realm.write(() => {
-                if(!moreInfo) {
+                if(!renderMoreInfo) {
                     realm.delete(props.item);
                 } else {
                     const food = realm.objectForPrimaryKey("Food", props.item._id);
@@ -99,6 +100,18 @@ export default function ProductItem(props) {
                 }
             });
         }).catch(error => console.error(error));
+    }
+
+    const renderAction = () => {
+        if(inFridge) {
+            return <AntDesign name="check" size={30} color={theme.colors.success} />;
+        }
+        return (
+            <TouchableOpacity
+                onPress={() => onAddToMyFridge()}>
+                <AntDesign name="plussquare" size={30} color={theme.colors.primary} />
+            </TouchableOpacity>
+        );
     }
 
     return (
@@ -117,9 +130,10 @@ export default function ProductItem(props) {
                         <Text style={styles.productName} numberOfLines={2} ellipsizeMode='tail'>
                             {foodName}
                         </Text>
-                        {moreInfo && isNearExpirationDate()}
+                        {renderMoreInfo && isNearExpirationDate()}
+                        {!renderMoreInfo && renderAction()}
                     </View>
-                    { moreInfo &&
+                    { renderMoreInfo &&
                         <View style={styles.productDetailFooter}>
                             <View style={styles.productExpDateContainer}>
                                 <Text style={styles.productExpirationDate}>

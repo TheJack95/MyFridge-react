@@ -18,7 +18,7 @@ export async function schedulePushNotification(title, body, date) {
             trigger: {date},
         });
     }
-    return null;
+    return 'null';
 }
 
 export async function removeNotification(id) {

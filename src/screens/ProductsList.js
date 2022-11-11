@@ -9,19 +9,25 @@ import Paragraph from "../components/Paragraph";
 import Logo from "../components/Logo";
 import i18n from "../core/translations";
 import {FlashList} from "@shopify/flash-list";
-import {Searchbar} from "react-native-paper";
+import {Modal, Portal, Searchbar} from "react-native-paper";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import Button from "../components/Button";
 
 export default function ProductsList({navigation, route}) {
-    const realm = RealmContext.useRealm();
+    const {useQuery, useRealm} = RealmContext;
+    const realm = useRealm();
     let items = [];
     const [filteredDataSource, setFilteredDataSource] = useState([]);
     const [masterDataSource, setMasterDataSource] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [modalOpen, setModalOpen] = useState(false);
+    const [date, setDate] = useState(new Date());
+    const [itemToAdd, setItemToAdd] = useState();
 
     if(route.name === 'ProductsList')
-        items = realm.objects(Food).filtered('inFridge == true');
+        items = useQuery(Food).filtered('inFridge == true');
     else
-        items = realm.objects(Food);
+        items = useQuery(Food);
 
     useEffect(() => {
         setFilteredDataSource(items);
@@ -57,6 +63,18 @@ export default function ProductsList({navigation, route}) {
         );
     };
 
+    const onDateChange = (event, selectedDate) => {
+        setDate(new Date(selectedDate));
+    }
+
+    const onAddToMyFridge = () => {
+        setModalOpen(false);
+        realm.write(() => {
+            itemToAdd.inFridge = true;
+            itemToAdd.expirationDate = date;
+        });
+    }
+
     const renderNoItems = () => {
         return <View style={[commonStyles.content, styles.noItems]}>
             <Logo/>
@@ -81,7 +99,14 @@ export default function ProductsList({navigation, route}) {
                     <FlashList
                         data={filteredDataSource}
                         renderItem={({item}) =>
-                            <ProductItem item={item} renderMoreInfo={route.name === 'ProductsList'}/>
+                            <ProductItem
+                                item={item}
+                                renderMoreInfo={route.name === 'ProductsList'}
+                                onAddToMyFridge={() => {
+                                    setItemToAdd(item);
+                                    setModalOpen(true);
+                                }}
+                            />
                         }
                         ItemSeparatorComponent={renderSeparator}
                         keyExtractor={item => item._id.toString()}
@@ -90,6 +115,32 @@ export default function ProductsList({navigation, route}) {
                     />
                 </View>
             }
+            <Portal>
+                <Modal
+                    visible={modalOpen}
+                    onDismiss={() => setModalOpen(false)}
+                    dismissable
+                    theme={theme}
+                    contentContainerStyle={commonStyles.modalView}
+                >
+                    <Header
+                        fontSize={21}
+                        color={theme.colors.primary}
+                    >{i18n.t('expirationDate')}</Header>
+                    <DateTimePicker
+                        value={date}
+                        mode="date"
+                        onChange={onDateChange}
+                        display="spinner"
+                        style={styles.datepicker}
+                        minimumDate={new Date()}
+                        textColor={theme.colors.onBackground}
+                    />
+                    <Button style={styles.button} mode="contained" onPress={onAddToMyFridge}>
+                        {i18n.t('save')}
+                    </Button>
+                </Modal>
+            </Portal>
         </View>
     );
 }

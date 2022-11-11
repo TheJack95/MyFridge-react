@@ -24,7 +24,8 @@ const translations = {
         search: 'Search',
         home: 'Home',
         myProducts: 'My products',
-        addToFridge: 'Add to My Fridge'
+        addToFridge: 'Add to My Fridge',
+        nearExpiration: ' will expire at '
     },
     it: {
         appName: 'Il Mio Frigo',
@@ -48,7 +49,8 @@ const translations = {
         search: 'Cerca',
         home: 'Home',
         myProducts: 'I miei articoli',
-        addToFridge: 'Aggiungi al mio frigo'
+        addToFridge: 'Aggiungi al mio frigo',
+        nearExpiration: ' scade il giorno '
     },
 };
 const i18n = new I18n(translations, {defaultLocale: 'en', locale: Localization.locale});

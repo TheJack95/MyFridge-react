@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import theme from './src/core/theme'
@@ -23,6 +23,19 @@ Notifications.setNotificationHandler({
 export default function App() {
 
     const {RealmProvider} = RealmContext;
+
+    useEffect(() => {
+        Notifications.getPermissionsAsync().then((statusObj) => {
+            if (statusObj.status !== 'granted') {
+                return Permissions.askAsync('notifications')
+            }
+            return statusObj;
+        }).then((statusObj) => {
+            if (statusObj.status !== 'granted') {
+                return true;
+            }
+        })
+    }, [])
 
     return (
         <RealmProvider>

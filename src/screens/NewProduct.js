@@ -3,12 +3,12 @@ import Header from "../components/Header";
 import TextInput from "../components/TextInput";
 import Button from "../components/Button";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Image, StyleSheet, Text, View} from "react-native";
+import {Image, StyleSheet, View} from "react-native";
 import {Switch} from "react-native-paper";
 import {Food} from "../models/Food";
 import {RealmContext} from "../models";
 import demoProduct from '../assets/foods/healthy-food.png'
-import theme, {commonStyles, Screen} from "../core/theme";
+import theme, {commonStyles} from "../core/theme";
 import {schedulePushNotification} from "../helpers/NotificationsHelper";
 import i18n from "../core/translations";
 import ImageSelection from "./ImageSelection";
@@ -38,7 +38,7 @@ export default function NewProduct({navigation, route}) {
         let notificationDate = new Date(date);
         notificationDate.setHours(9, 0);
         schedulePushNotification(
-            "Food notification", text +" in scadenza", notificationDate
+            i18n.t('appName'), text + i18n.t('nearExpiration') + notificationDate.toLocaleDateString(), notificationDate
         ).then(notificationId => {
             let food = Food.generate(text, date, imageUrl, imageName, notificationId, isSwitchOn);
             realm.write(() => {
