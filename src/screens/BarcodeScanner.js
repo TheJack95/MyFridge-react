@@ -6,6 +6,8 @@ import Button from "../components/Button";
 import getProductByBarcode from "../helpers/BarcodeScannerHelper";
 import theme, {commonStyles} from "../core/theme";
 import i18n from "../core/translations";
+import Logo from "../components/Logo";
+import Paragraph from "../components/Paragraph";
 
 export default function BarcodeScanner({navigation}) {
     const [hasPermission, setHasPermission] = useState(null);
@@ -28,11 +30,25 @@ export default function BarcodeScanner({navigation}) {
         });
     };
 
+    const renderNoItems = () => {
+        return <View style={[commonStyles.content, styles.noItems]}>
+            <Logo/>
+            <Header color={theme.colors.onBackground}>{i18n.t('noItems')}</Header>
+            <Paragraph>{i18n.t('paragraph1')}</Paragraph>
+            <Paragraph>{i18n.t('paragraph2')}</Paragraph>
+            {route.name === 'ProductsList' && <Paragraph>{i18n.t('paragraph3')}</Paragraph>}
+        </View>;
+    }
+
     if (hasPermission === null) {
-        return <Text>Requesting for camera permission</Text>;
+        return <View style={[commonStyles.content, styles.noItems]}>
+            <Header color={theme.colors.onBackground}>{i18n.t('requestCamera')}</Header>
+        </View>;
     }
     if (hasPermission === false) {
-        return <Text>No access to camera</Text>;
+        return <View style={[commonStyles.content, styles.noItems]}>
+            <Header color={theme.colors.onBackground}>{i18n.t('noCameraAccess')}</Header>
+        </View>;
     }
 
     const onListItemPress = () => {

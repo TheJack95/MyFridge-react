@@ -25,7 +25,9 @@ const translations = {
         home: 'Home',
         myProducts: 'My products',
         addToFridge: 'Add to My Fridge',
-        nearExpiration: ' will expire at '
+        nearExpiration: ' will expire at ',
+        requestCamera: 'Requesting for camera permission',
+        noCameraAccess: 'No access to camera',
     },
     it: {
         appName: 'Il Mio Frigo',
@@ -50,7 +52,9 @@ const translations = {
         home: 'Home',
         myProducts: 'I miei articoli',
         addToFridge: 'Aggiungi al mio frigo',
-        nearExpiration: ' scade il giorno '
+        nearExpiration: ' scade il giorno ',
+        requestCamera: 'Richiesta di autorizzazione alla fotocamera',
+        noCameraAccess: 'Nessun accesso alla fotocamera',
     },
 };
 const i18n = new I18n(translations, {defaultLocale: 'en', locale: Localization.locale});
