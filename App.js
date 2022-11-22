@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react'
 import {NavigationContainer} from '@react-navigation/native'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import theme from './src/core/theme'
 import {BarcodeScanner, ProductsList, Settings} from './src/screens'
 import NewProduct from "./src/screens/NewProduct";
 import {RealmContext} from './src/models';
 import * as Notifications from "expo-notifications";
+import * as Permissions from "expo-permissions";
 import {AntDesign, Ionicons, MaterialCommunityIcons, FontAwesome} from "@expo/vector-icons";
 import i18n from "./src/core/translations";
 import {Provider} from "react-native-paper";
@@ -42,7 +43,7 @@ export default function App() {
             <Provider>
                 <NavigationContainer theme={theme}>
                     <Tab.Navigator
-                        screenOptions={({ route }) => ({
+                        screenOptions={({route}) => ({
                             initialRouteName: 'ProductsList',
                             unmountOnBlur: true,
                             headerStyle: {
@@ -55,24 +56,33 @@ export default function App() {
                             },
                             tabBarStyle: {
                                 backgroundColor: theme.colors.primary,
+                                height: 100,
+                                padding: 15
                             },
-                            tabBarActiveTintColor: theme.colors.onPrimaryContainer,
-                            tabBarInactiveTintColor: theme.colors.onPrimary,
-                            tabBarIcon: ({ focused, color, size }) => {
-                                let iconColor = focused ? theme.colors.onPrimaryContainer : theme.colors.onPrimary;
+                            tabBarItemStyle: {
+                                borderRadius: 10,
+                                height: 60,
+                                width: 'auto'
+                            },
+                            tabBarInactiveTintColor: theme.colors.primaryContainer,
+                            tabBarActiveTintColor: theme.colors.primaryContainer,
+                            tabBarActiveBackgroundColor: theme.colors.onPrimaryContainer,
+                            tabBarIcon: ({focused, color, size}) => {
                                 switch (route.name) {
                                     case 'NewProduct':
-                                        return <AntDesign name="plussquare" size={50} color={iconColor} />
+                                        return <AntDesign name="plussquare" size={50} color={theme.colors.success}/>
                                     case 'BarcodeScanner':
-                                        return <MaterialCommunityIcons name="barcode-scan" size={30} color={iconColor} />;
+                                        return <MaterialCommunityIcons name="barcode-scan" size={30}
+                                                                       color={theme.colors.tertiary}/>;
                                     case 'ItemList':
-                                        return <FontAwesome name="list" size={30} color={iconColor} />;
+                                        return <FontAwesome name="list" size={30} color={theme.colors.inversePrimary}/>;
                                     case 'Settings':
-                                        return <Ionicons name="settings-sharp" size={30} color={iconColor} />;
+                                        return <Ionicons name="settings-sharp" size={30}
+                                                         color={theme.colors.outlineVariant}/>;
                                     default:
-                                        return <MaterialCommunityIcons name="home" size={30} color={iconColor} />;
+                                        return <MaterialCommunityIcons name="fridge-variant" size={35}
+                                                                       color={theme.colors.warning}/>;
                                 }
-
                             }
                         })}
                     >
@@ -93,7 +103,8 @@ export default function App() {
                             component={NewProduct}
                             options={{
                                 tabBarLabel: () => null,
-                                title: i18n.t('addNewProduct')}}
+                                title: i18n.t('addNewProduct')
+                            }}
                         />
                         <Tab.Screen
                             name="BarcodeScanner"

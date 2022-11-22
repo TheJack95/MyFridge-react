@@ -13,6 +13,6 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     textAlign: 'center',
     marginBottom: 12,
-    color: theme.colors.onBackground
+    color: theme.colors.primaryContainer
   },
 })

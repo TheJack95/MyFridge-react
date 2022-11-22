@@ -110,7 +110,7 @@ export default function NewProduct({navigation, route}) {
                     <Switch value={isSwitchOn} onValueChange={onToggleSwitch} color={theme.colors.primary}/>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <Button mode="contained" style={[{backgroundColor: theme.colors.secondary}, styles.button]} onPress={() => navigation.navigate("ProductsList")}>
+                    <Button mode="contained" style={[styles.button,{backgroundColor: theme.colors.secondary}]} onPress={() => navigation.navigate("ProductsList")}>
                         {i18n.t('cancel')}
                     </Button>
                     <Button mode="contained" style={styles.button} onPress={handleAddFood}>
@@ -126,7 +126,8 @@ const styles = StyleSheet.create({
     container: {
         alignSelf: 'center',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: theme.colors.surfaceVariant
     },
     dateContainer: {
         width: 300,
@@ -160,6 +161,7 @@ const styles = StyleSheet.create({
     button: {
         flex: 1,
         margin: 10,
+        backgroundColor: '#ffba1a'
     },
     switchText: {
         alignSelf: 'center',
