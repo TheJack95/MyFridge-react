@@ -10,6 +10,7 @@ import * as Permissions from "expo-permissions";
 import {AntDesign, Ionicons, MaterialCommunityIcons, FontAwesome} from "@expo/vector-icons";
 import i18n from "./src/core/translations";
 import {Provider} from "react-native-paper";
+import {setDefaultSettings} from "./src/helpers/SettingsHelper";
 
 const Tab = createBottomTabNavigator();
 
@@ -26,6 +27,9 @@ export default function App() {
     const {RealmProvider} = RealmContext;
 
     useEffect(() => {
+        setDefaultSettings()
+            .then(r => console.debug("Settings saved"))
+            .catch(e => console.error(e));
         Notifications.getPermissionsAsync().then((statusObj) => {
             if (statusObj.status !== 'granted') {
                 return Permissions.askAsync('notifications')
@@ -51,7 +55,7 @@ export default function App() {
                             },
                             headerTitleStyle: {
                                 fontSize: 30,
-                                color: theme.colors.onPrimary,
+                                color: theme.colors.onSecondary,
                                 fontWeight: 'bold',
                             },
                             tabBarStyle: {
@@ -62,7 +66,7 @@ export default function App() {
                             tabBarItemStyle: {
                                 borderRadius: 10,
                                 height: 60,
-                                width: 'auto'
+                                paddingVertical: 5
                             },
                             tabBarInactiveTintColor: theme.colors.primaryContainer,
                             tabBarActiveTintColor: theme.colors.primaryContainer,

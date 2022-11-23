@@ -13,7 +13,7 @@ import {Modal, Portal, Searchbar} from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Button from "../components/Button";
 
-export default function ProductsList({navigation, route}) {
+export default function ProductsList({route}) {
     const {useQuery, useRealm} = RealmContext;
     const realm = useRealm();
     let items = [];
@@ -135,7 +135,7 @@ export default function ProductsList({navigation, route}) {
                         minimumDate={new Date()}
                         textColor={theme.colors.onBackground}
                     />
-                    <Button style={styles.button} mode="contained" onPress={onAddToMyFridge}>
+                    <Button style={{backgroundColor: theme.colors.onPrimary}} mode="contained" onPress={onAddToMyFridge}>
                         {i18n.t('save')}
                     </Button>
                 </Modal>
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     },
     searchbar: {
         zIndex: 1,
-        marginBottom: 10
+        marginVertical: 10,
     },
 })
 

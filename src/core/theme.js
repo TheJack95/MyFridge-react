@@ -13,7 +13,7 @@ const lightTheme = {
     "onPrimary": "rgb(255, 186, 30)",
     "primaryContainer": "rgb(233, 221, 255)",
     "onPrimaryContainer": "rgba(192,71,229,0.3)",
-    "secondary": "rgb(98, 91, 113)",
+    "secondary": "rgb(83,10,87)",
     "onSecondary": "rgb(255, 255, 255)",
     "secondaryContainer": "rgb(232, 222, 248)",
     "onSecondaryContainer": "rgb(30, 25, 43)",

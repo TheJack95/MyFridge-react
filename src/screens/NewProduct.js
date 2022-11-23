@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     button: {
         flex: 1,
         margin: 10,
-        backgroundColor: '#ffba1a'
+        backgroundColor: theme.colors.onPrimary
     },
     switchText: {
         alignSelf: 'center',

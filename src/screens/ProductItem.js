@@ -206,6 +206,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         justifyContent: 'center',
+        marginVertical: 10,
     },
     productImage: {
         width: 50,
