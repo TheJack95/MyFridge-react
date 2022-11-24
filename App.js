@@ -10,7 +10,7 @@ import * as Permissions from "expo-permissions";
 import {AntDesign, Ionicons, MaterialCommunityIcons, FontAwesome} from "@expo/vector-icons";
 import i18n from "./src/core/translations";
 import {Provider} from "react-native-paper";
-import {setDefaultSettings} from "./src/helpers/SettingsHelper";
+import {setDefaultSettings, settings} from "./src/helpers/SettingsHelper";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,7 +28,7 @@ export default function App() {
 
     useEffect(() => {
         setDefaultSettings()
-            .then(r => console.debug("Settings saved"))
+            .then(r => console.debug(settings))
             .catch(e => console.error(e));
         Notifications.getPermissionsAsync().then((statusObj) => {
             if (statusObj.status !== 'granted') {

@@ -14,6 +14,7 @@ import i18n from "../core/translations";
 import ImageSelection from "./ImageSelection";
 import {IMAGES} from "../constants/images";
 import Paragraph from "../components/Paragraph";
+import {settings} from "../helpers/SettingsHelper";
 
 export default function NewProduct({navigation, route}) {
     const {useRealm} = RealmContext;
@@ -36,6 +37,7 @@ export default function NewProduct({navigation, route}) {
 
     const handleAddFood = () => {
         let notificationDate = new Date(date);
+        notificationDate.setDate(notificationDate.getDate() - parseInt(settings.firstNotification));
         notificationDate.setHours(9, 0);
         schedulePushNotification(
             i18n.t('appName'), text + i18n.t('nearExpiration') + notificationDate.toLocaleDateString(), notificationDate

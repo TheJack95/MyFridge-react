@@ -5,22 +5,24 @@ import theme from '../core/theme'
 
 type HeaderProps = {
   fontSize?: number;
-  color?: string
+  color?: string;
+  textAlign?: string;
 }
 
 export default function Header(props: HeaderProps) {
   const fontSize = props.fontSize ?? 30;
   const color = props.color ?? theme.colors.onPrimary
+  const textAlign = props.textAlign ?? "center";
   return <Text
-      style={styles(fontSize,color).header} {...props} />
+      style={styles(fontSize,color, textAlign).header} {...props} />
 }
 
-const styles = (fontSize, color) => StyleSheet.create({
+const styles = (fontSize, color, textAlign) => StyleSheet.create({
   header: {
     fontSize: fontSize,
     color: color,
     fontWeight: 'bold',
     paddingVertical: 12,
-    textAlign: "center"
+    textAlign: textAlign
   },
 })

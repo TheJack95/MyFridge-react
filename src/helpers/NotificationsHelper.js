@@ -1,4 +1,5 @@
 import * as Notifications from "expo-notifications";
+import {areNotificationAllowed} from "./SettingsHelper";
 
 export async function allowsNotificationsAsync() {
     const settings = await Notifications.getPermissionsAsync();
@@ -9,7 +10,7 @@ export async function allowsNotificationsAsync() {
 
 export async function schedulePushNotification(title, body, date) {
     const hasPushNotificationPermissionGranted = await allowsNotificationsAsync()
-    if(hasPushNotificationPermissionGranted) {
+    if(hasPushNotificationPermissionGranted && settings.notificationsAllowed === 'true') {
         return await Notifications.scheduleNotificationAsync({
             content: {
                 title: title,

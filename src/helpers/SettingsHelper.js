@@ -1,46 +1,54 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import i18n from "../core/translations";
 
-const STORAGE_KEY = 'settings';
+export const LANGUAGE = 'languages';
+export const NOTIFICATION_ALLOWED = 'notificationsAllowed';
+export const FIRST_NOTIFICATION = 'firstNotification';
+export const SECOND_NOTIFICATION = 'secondNotification';
 
-type NotificationSettings = {
+class Setting {
+    languages: string;
     notificationsAllowed: boolean;
     firstNotification: string;
     secondNotification: string;
 }
 
-export type Setting = {
-    languages: string;
-    notificationSettings: NotificationSettings
-}
+export var settings: Setting = undefined;
 
 export async function setDefaultSettings() {
-    if(await getSettings() === null) {
-        let defSettings = {
+    if(settings === undefined) {
+        settings = {
             languages: i18n.locale,
-            notificationSettings: {
-                notificationsAllowed: true,
-                firstNotification: '2',
-                secondNotification: '5'
-            }
+            notificationsAllowed: "true",
+            firstNotification: "2",
+            secondNotification: "5"
         }
-        await setSettings(defSettings);
+        await setSettings(LANGUAGE, i18n.locale);
+        await setSettings(NOTIFICATION_ALLOWED, "true");
+        await setSettings(FIRST_NOTIFICATION, "2");
+        await setSettings(SECOND_NOTIFICATION, "5");
+    } else {
+        settings = {
+            languages: await getSettings(LANGUAGE),
+            notificationsAllowed:  await getSettings(NOTIFICATION_ALLOWED),
+            firstNotification: await getSettings(FIRST_NOTIFICATION),
+            secondNotification: await getSettings(SECOND_NOTIFICATION)
+        }
     }
 }
 
-export async function setSettings(value) {
+export async function setSettings(storageKey, value) {
     try {
-        const jsonValue = JSON.stringify(value)
-        await AsyncStorage.setItem(STORAGE_KEY, jsonValue)
+        settings[storageKey] = value;
+        await AsyncStorage.setItem(storageKey, value)
     } catch(e) {
-        console.error("Error saving settings: ", e);
+        console.error("Error saving "+storageKey+" settings: ", e);
     }
 }
 
-export async function getSettings() {
+export async function getSettings(storageKey): Setting {
     try {
-        const jsonValue = await AsyncStorage.getItem(STORAGE_KEY)
-        return jsonValue != null ? JSON.parse(jsonValue) : null;
+        return await AsyncStorage.getItem(storageKey);
     } catch(e) {
         console.error("Error reading settings: ", e);
     }
