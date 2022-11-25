@@ -1,5 +1,5 @@
 import * as Notifications from "expo-notifications";
-import {areNotificationAllowed} from "./SettingsHelper";
+import {settings} from "./SettingsHelper";
 
 export async function allowsNotificationsAsync() {
     const settings = await Notifications.getPermissionsAsync();

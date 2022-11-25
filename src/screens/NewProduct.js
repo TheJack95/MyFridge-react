@@ -35,10 +35,24 @@ export default function NewProduct({navigation, route}) {
         }
     }, []);
 
-    const handleAddFood = () => {
+    const getTomorrowDate = () => {
+        const today = new Date()
+        const tomorrow = new Date(today)
+        tomorrow.setDate(tomorrow.getDate() + 1)
+        return tomorrow;
+    }
+
+    const buildNotificationDate = () => {
         let notificationDate = new Date(date);
-        notificationDate.setDate(notificationDate.getDate() - parseInt(settings.firstNotification));
+        let dayOfMonth = notificationDate.getDate();
+        if(dayOfMonth - parseInt(settings.firstNotification) > new Date().getDate() )
+            notificationDate.setDate(dayOfMonth - parseInt(settings.firstNotification));
         notificationDate.setHours(9, 0);
+        return notificationDate;
+    }
+
+    const handleAddFood = () => {
+        let notificationDate = buildNotificationDate();
         schedulePushNotification(
             i18n.t('appName'), text + i18n.t('nearExpiration') + notificationDate.toLocaleDateString(), notificationDate
         ).then(notificationId => {
@@ -103,7 +117,7 @@ export default function NewProduct({navigation, route}) {
                         onChange={onDateChange}
                         display="spinner"
                         style={styles.datepicker}
-                        minimumDate={new Date()}
+                        minimumDate={getTomorrowDate()}
                         textColor={theme.colors.onBackground}
                     />
                 </View>

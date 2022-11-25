@@ -44,7 +44,7 @@ export default function Settings() {
                         color={theme.colors.onPrimary}
                         textAlign={'justify'}
                     >{i18n.t('notifications')}</Header>
-                    {notificationsAllowed && (<Paragraph style={{color: theme.colors.onSecondary}}>{i18n.t('notificationSettingText2')}</Paragraph>)}
+                    <Paragraph style={{color: theme.colors.onSecondary}}>{i18n.t('notificationSettingText2')}</Paragraph>
                 </View>
                 <View style={styles.notSettingsContainer}>
                     <View style={styles.switchContainer}>

@@ -105,10 +105,12 @@ const darkTheme = {
 }
 
 let theme = lightTheme;
+/*
 const colorScheme = Appearance.getColorScheme();
 if (colorScheme === 'dark') {
   theme = darkTheme;
 }
+*/
 
 export const commonStyles = StyleSheet.create({
   container: {
