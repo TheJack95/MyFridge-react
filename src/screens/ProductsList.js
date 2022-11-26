@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import ProductItem from './ProductItem'
-import {StyleSheet, View} from 'react-native';
+import {ImageBackground, StyleSheet, View} from 'react-native';
 import Header from "../components/Header";
 import theme, {commonStyles, Screen} from "../core/theme";
 import {RealmContext} from "../models";
@@ -13,7 +13,7 @@ import {Modal, Portal, Searchbar} from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Button from "../components/Button";
 
-export default function ProductsList({navigation, route}) {
+export default function ProductsList({route}) {
     const {useQuery, useRealm} = RealmContext;
     const realm = useRealm();
     let items = [];
@@ -24,7 +24,7 @@ export default function ProductsList({navigation, route}) {
     const [date, setDate] = useState(new Date());
     const [itemToAdd, setItemToAdd] = useState();
 
-    if(route.name === 'ProductsList')
+    if (route.name === 'ProductsList')
         items = useQuery(Food).filtered('inFridge == true');
     else
         items = useQuery(Food);
@@ -78,7 +78,7 @@ export default function ProductsList({navigation, route}) {
     const renderNoItems = () => {
         return <View style={[commonStyles.content, styles.noItems]}>
             <Logo/>
-            <Header color={theme.colors.onBackground}>{i18n.t('noItems')}</Header>
+            <Header color={theme.colors.primaryContainer}>{i18n.t('noItems')}</Header>
             <Paragraph>{i18n.t('paragraph1')}</Paragraph>
             <Paragraph>{i18n.t('paragraph2')}</Paragraph>
             {route.name === 'ProductsList' && <Paragraph>{i18n.t('paragraph3')}</Paragraph>}
@@ -93,8 +93,8 @@ export default function ProductsList({navigation, route}) {
                 value={searchQuery}
                 style={styles.searchbar}
             />
-            { filteredDataSource.length === 0 && renderNoItems()}
-            { filteredDataSource.length > 0 &&
+            {filteredDataSource.length === 0 && renderNoItems()}
+            {filteredDataSource.length > 0 &&
                 <View style={commonStyles.content}>
                     <FlashList
                         data={filteredDataSource}
@@ -108,7 +108,6 @@ export default function ProductsList({navigation, route}) {
                                 }}
                             />
                         }
-                        ItemSeparatorComponent={renderSeparator}
                         keyExtractor={item => item._id.toString()}
                         estimatedItemSize={100}
                         estimatedListSize={{height: Screen.height, width: Screen.width}}
@@ -136,7 +135,7 @@ export default function ProductsList({navigation, route}) {
                         minimumDate={new Date()}
                         textColor={theme.colors.onBackground}
                     />
-                    <Button style={styles.button} mode="contained" onPress={onAddToMyFridge}>
+                    <Button style={{backgroundColor: theme.colors.onPrimary}} mode="contained" onPress={onAddToMyFridge}>
                         {i18n.t('save')}
                     </Button>
                 </Modal>
@@ -151,8 +150,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     searchbar: {
-        zIndex:1
-    }
+        zIndex: 1,
+        marginVertical: 10,
+    },
 })
 
 

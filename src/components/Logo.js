@@ -1,14 +1,7 @@
-  import React from 'react'
-import { Image, StyleSheet } from 'react-native'
+import React from 'react'
+import {StyleSheet } from 'react-native';
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 
 export default function Logo() {
-  return <Image source={require('../assets/logo.png')} style={styles.image} />
+  return <MaterialCommunityIcons name="fridge-variant" size={150} color='#FFBA1AFF'/>;
 }
-
-const styles = StyleSheet.create({
-  image: {
-    width: 110,
-    height: 110,
-    marginBottom: 8,
-  },
-})

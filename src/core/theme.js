@@ -9,23 +9,23 @@ export const Screen = {
 const lightTheme = {
   ...DefaultTheme,
   "colors": {
-    "primary": "rgb(108, 53, 227)",
-    "onPrimary": "rgb(255, 255, 255)",
+    "primary": "rgb(125, 17, 153)",
+    "onPrimary": "rgb(255, 186, 30)",
     "primaryContainer": "rgb(233, 221, 255)",
-    "onPrimaryContainer": "rgb(34, 0, 93)",
-    "secondary": "rgb(98, 91, 113)",
+    "onPrimaryContainer": "rgba(192,71,229,0.3)",
+    "secondary": "rgb(83,10,87)",
     "onSecondary": "rgb(255, 255, 255)",
     "secondaryContainer": "rgb(232, 222, 248)",
     "onSecondaryContainer": "rgb(30, 25, 43)",
-    "tertiary": "rgb(126, 82, 96)",
+    "tertiary": "rgb(252,94,119)",
     "onTertiary": "rgb(255, 255, 255)",
     "tertiaryContainer": "rgb(255, 217, 227)",
     "onTertiaryContainer": "rgb(49, 16, 29)",
-    "error": "rgb(186, 26, 26)",
+    "fd2301": "rgb(186, 26, 26)",
     "onError": "rgb(255, 255, 255)",
     "errorContainer": "rgb(255, 218, 214)",
     "onErrorContainer": "rgb(65, 0, 2)",
-    "background": "rgb(255, 251, 255)",
+    "background": "rgb(64, 8, 67)",
     "onBackground": "rgb(28, 27, 30)",
     "surface": "rgb(255, 251, 255)",
     "onSurface": "rgb(28, 27, 30)",
@@ -37,7 +37,7 @@ const lightTheme = {
     "scrim": "rgb(0, 0, 0)",
     "inverseSurface": "rgb(49, 48, 51)",
     "inverseOnSurface": "rgb(244, 239, 244)",
-    "inversePrimary": "rgb(207, 189, 255)",
+    "inversePrimary": "rgb(176,153,250)",
     "elevation": {
       "level0": "transparent",
       "level1": "rgb(248, 241, 254)",
@@ -49,9 +49,9 @@ const lightTheme = {
     "surfaceDisabled": "rgba(28, 27, 30, 0.12)",
     "onSurfaceDisabled": "rgba(28, 27, 30, 0.38)",
     "backdrop": "rgba(50, 47, 56, 0.4)",
-    errorIcon: '#cb1331',
-    warning: '#E47F28',
-    success: '#7AC439',
+    "errorIcon": '#fd2301',
+    "warning": '#fcc222',
+    "success": '#9cde66',
   }
 }
 
@@ -105,17 +105,18 @@ const darkTheme = {
 }
 
 let theme = lightTheme;
+/*
 const colorScheme = Appearance.getColorScheme();
 if (colorScheme === 'dark') {
   theme = darkTheme;
 }
+*/
 
 export const commonStyles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: theme.colors.background,
   },
   logoContainer: {
     paddingTop: 40,

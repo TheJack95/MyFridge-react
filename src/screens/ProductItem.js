@@ -151,12 +151,11 @@ export default function ProductItem(props) {
 const styles = StyleSheet.create({
     product: {
         backgroundColor: 'white',
-        paddingLeft: 10,
-        paddingRight: 15,
-        paddingTop: 15,
-        paddingBottom: 15,
+        padding: 10,
         flexDirection: 'row',
         flex: 1,
+        margin: 10,
+        borderRadius: 44/2
     },
     body: {
         flex: 1,
@@ -207,9 +206,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         justifyContent: 'center',
+        marginVertical: 10,
     },
     productImage: {
-        width: 70,
-        height: 70,
+        width: 50,
+        height: 50,
     }
 })

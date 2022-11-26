@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   input: {
-    backgroundColor: theme.colors.background,
+    backgroundColor: theme.colors.surfaceVariant,
   },
   description: {
     fontSize: 13,

@@ -28,6 +28,12 @@ const translations = {
         nearExpiration: ' will expire at ',
         requestCamera: 'Requesting for camera permission',
         noCameraAccess: 'No access to camera',
+        notifications: 'Notifications',
+        notificationSettingText: 'Notifiche per i prodotti in scadenza',
+        notificationSettingText2: 'Scegli se ricevere notifiche e quanti giorni prima della scadenza vuoi essere notificato',
+        firstNotification: 'Days before expiration',
+        secondNotifications: 'Second notification',
+        language: 'Language',
     },
     it: {
         appName: 'Il Mio Frigo',
@@ -55,6 +61,12 @@ const translations = {
         nearExpiration: ' scade il giorno ',
         requestCamera: 'Richiesta di autorizzazione alla fotocamera',
         noCameraAccess: 'Nessun accesso alla fotocamera',
+        notifications: 'Notifiche',
+        notificationSettingText: 'Notifiche per i prodotti in scadenza',
+        notificationSettingText2: 'Scegli quanti giorni prima della scadenza vuoi ricevere la notifica',
+        firstNotification: 'Giorni prima della scandenza',
+        secondNotification: 'Seconda notifica',
+        language: 'Lingua',
     },
 };
 const i18n = new I18n(translations, {defaultLocale: 'en', locale: Localization.locale});
