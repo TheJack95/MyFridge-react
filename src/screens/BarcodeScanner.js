@@ -6,8 +6,6 @@ import Button from "../components/Button";
 import getProductByBarcode from "../helpers/BarcodeScannerHelper";
 import theme, {commonStyles} from "../core/theme";
 import i18n from "../core/translations";
-import Logo from "../components/Logo";
-import Paragraph from "../components/Paragraph";
 
 export default function BarcodeScanner({navigation}) {
     const [hasPermission, setHasPermission] = useState(null);
@@ -20,7 +18,7 @@ export default function BarcodeScanner({navigation}) {
         })
     }, []);
 
-    const handleBarCodeScanned = ({type, data}) => {
+    const handleBarCodeScanned = ({data}) => {
         setScanned(true);
         getProductByBarcode(data).then(response => {
             if (response.status === 1)
@@ -30,30 +28,17 @@ export default function BarcodeScanner({navigation}) {
         });
     };
 
-    const renderNoItems = () => {
-        return <View style={[commonStyles.content, styles.noItems]}>
-            <Logo/>
-            <Header color={theme.colors.onBackground}>{i18n.t('noItems')}</Header>
-            <Paragraph>{i18n.t('paragraph1')}</Paragraph>
-            <Paragraph>{i18n.t('paragraph2')}</Paragraph>
-            {route.name === 'ProductsList' && <Paragraph>{i18n.t('paragraph3')}</Paragraph>}
-        </View>;
-    }
-
     if (hasPermission === null) {
         return <View style={[commonStyles.content, styles.noItems]}>
-            <Header color={theme.colors.onBackground}>{i18n.t('requestCamera')}</Header>
+            <Header color={theme.colors.onPrimary}>{i18n.t('requestCamera')}</Header>
         </View>;
     }
     if (hasPermission === false) {
         return <View style={[commonStyles.content, styles.noItems]}>
-            <Header color={theme.colors.onBackground}>{i18n.t('noCameraAccess')}</Header>
+            <Header color={theme.colors.onPrimary}>{i18n.t('noCameraAccess')}</Header>
         </View>;
     }
 
-    const onListItemPress = () => {
-        navigation.navigate('ProductsList');
-    }
 
     const renderNoItemFound = () => {
         return (
@@ -69,10 +54,6 @@ export default function BarcodeScanner({navigation}) {
     const onRetryPress = () => {
         setScanned(false);
         setNotFound(false);
-    }
-
-    const onPlusPress = () => {
-
     }
 
     return (

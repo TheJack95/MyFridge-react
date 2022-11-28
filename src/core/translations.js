@@ -34,6 +34,7 @@ const translations = {
         firstNotification: 'Days before expiration',
         secondNotifications: 'Second notification',
         language: 'Language',
+        changeDate: 'Change date'
     },
     it: {
         appName: 'Il Mio Frigo',
@@ -67,6 +68,7 @@ const translations = {
         firstNotification: 'Giorni prima della scandenza',
         secondNotification: 'Seconda notifica',
         language: 'Lingua',
+        changeDate: 'Cambia data'
     },
 };
 const i18n = new I18n(translations, {defaultLocale: 'en', locale: Localization.locale});

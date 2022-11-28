@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import ProductItem from './ProductItem'
-import {ImageBackground, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Header from "../components/Header";
 import theme, {commonStyles, Screen} from "../core/theme";
 import {RealmContext} from "../models";
@@ -10,8 +10,8 @@ import Logo from "../components/Logo";
 import i18n from "../core/translations";
 import {FlashList} from "@shopify/flash-list";
 import {Modal, Portal, Searchbar} from "react-native-paper";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import Button from "../components/Button";
+import DatePicker from "react-native-date-picker";
 
 export default function ProductsList({route}) {
     const {useQuery, useRealm} = RealmContext;
@@ -51,19 +51,7 @@ export default function ProductsList({route}) {
         }
     };
 
-    const renderSeparator = () => {
-        return (
-            <View
-                style={{
-                    height: 1,
-                    width: "100%",
-                    backgroundColor: "#D8D8D8",
-                }}
-            />
-        );
-    };
-
-    const onDateChange = (event, selectedDate) => {
+    const onDateChange = (selectedDate) => {
         setDate(new Date(selectedDate));
     }
 
@@ -126,16 +114,15 @@ export default function ProductsList({route}) {
                         fontSize={21}
                         color={theme.colors.primary}
                     >{i18n.t('expirationDate')}</Header>
-                    <DateTimePicker
-                        value={date}
+                    <DatePicker
+                        date={date}
                         mode="date"
                         onChange={onDateChange}
-                        display="spinner"
-                        style={styles.datepicker}
                         minimumDate={new Date()}
-                        textColor={theme.colors.onBackground}
+                        androidVariant='iosClone'
+                        locale={i18n.locale}
                     />
-                    <Button style={{backgroundColor: theme.colors.onPrimary}} mode="contained" onPress={onAddToMyFridge}>
+                    <Button style={styles.saveButton} mode="contained" onPress={onAddToMyFridge}>
                         {i18n.t('save')}
                     </Button>
                 </Modal>
@@ -152,7 +139,13 @@ const styles = StyleSheet.create({
     searchbar: {
         zIndex: 1,
         marginVertical: 10,
+        backgroundColor: 'white',
     },
+    saveButton: {
+        marginTop: 10,
+        backgroundColor: theme.colors.onPrimary,
+        width: '50%'
+    }
 })
 
 

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Header from "../components/Header";
 import TextInput from "../components/TextInput";
 import Button from "../components/Button";
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DatePicker from 'react-native-date-picker'
 import {Image, StyleSheet, View} from "react-native";
 import {Switch} from "react-native-paper";
 import {Food} from "../models/Food";
@@ -73,7 +73,7 @@ export default function NewProduct({navigation, route}) {
         setText(value);
     }
 
-    const onDateChange = (event, selectedDate) => {
+    const onDateChange = (selectedDate) => {
         setDate(new Date(selectedDate));
     }
 
@@ -111,14 +111,16 @@ export default function NewProduct({navigation, route}) {
                     color={theme.colors.primary}
                 >{i18n.t('expirationDate')}</Header>
                 <View style={styles.dateContainer}>
-                    <DateTimePicker
-                        value={date}
-                        mode="date"
-                        onChange={onDateChange}
-                        display="spinner"
-                        style={styles.datepicker}
+                    <DatePicker
+                        date={date}
+                        onDateChange={onDateChange}
+                        androidVariant='iosClone'
                         minimumDate={getTomorrowDate()}
-                        textColor={theme.colors.onBackground}
+                        mode="date"
+                        locale={i18n.locale}
+                        style={styles.datepicker}
+                        fadeToColor={theme.colors.surfaceVariant}
+                        theme="light"
                     />
                 </View>
                 <View style={styles.switchContainer}>
@@ -165,9 +167,7 @@ const styles = StyleSheet.create({
     datepicker: {
         height: 180,
         width: 400,
-        margin: 0,
-        padding: 0,
-        color: theme.colors.primary
+        marginBottom: 10
     },
     productImage: {
         width: 100,

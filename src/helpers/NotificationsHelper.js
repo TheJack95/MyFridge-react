@@ -22,8 +22,6 @@ export async function schedulePushNotification(title, body, date) {
     return 'null';
 }
 
-export async function removeNotification(id) {
-    return Notifications.cancelScheduledNotificationAsync(id)
-        .then(value => console.debug("Cancel notification: ", value))
-        .catch(error => console.error(error));
+export function removeNotification(id) {
+    return Notifications.cancelScheduledNotificationAsync(id);
 }

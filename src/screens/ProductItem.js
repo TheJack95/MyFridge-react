@@ -1,10 +1,9 @@
 import React from 'react';
-import {Dimensions, Image, StyleSheet, Text, View, Animated, I18nManager, TouchableOpacity} from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
+import {Animated, Dimensions, I18nManager, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {AntDesign, Entypo} from '@expo/vector-icons';
 
 import theme from "../core/theme";
-import {RectButton, Swipeable} from "react-native-gesture-handler";
+import {GestureHandlerRootView, RectButton, Swipeable} from "react-native-gesture-handler";
 import {RealmContext} from "../models";
 import {IMAGES} from "../constants/images";
 import i18n from "../core/translations";
@@ -28,26 +27,26 @@ export default function ProductItem(props) {
     }
 
     const getImage = () => {
-		if(imageName && IMAGES[imageName])
-	   		return IMAGES[imageName];
+        if (imageName && IMAGES[imageName])
+            return IMAGES[imageName];
 
-        if(imageUrl)
+        if (imageUrl)
             return {uri: imageUrl};
-		
-		return require('../assets/foods/healthy-food.png');
+
+        return require('../assets/foods/healthy-food.png');
     }
 
     const isNearExpirationDate = () => {
         const today = new Date();
-        if(expirationDate <= today)
-            return <AntDesign name="closecircle" size={30} color={theme.colors.errorIcon} />;
+        if (expirationDate <= today)
+            return <AntDesign name="closecircle" size={30} color={theme.colors.errorIcon}/>;
 
         const diffTime = Math.abs(expirationDate - today);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        if(diffDays <= 5)
-            return <Entypo name="warning" size={30} color={theme.colors.warning} />;
+        if (diffDays <= 5)
+            return <Entypo name="warning" size={30} color={theme.colors.warning}/>;
 
-        return <AntDesign name="checkcircle" size={30} color={theme.colors.success} />;
+        return <AntDesign name="checkcircle" size={30} color={theme.colors.success}/>;
     }
 
     const renderRightAction = (
@@ -62,9 +61,9 @@ export default function ProductItem(props) {
         });
 
         return (
-            <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
+            <Animated.View style={{flex: 1, transform: [{translateX: trans}]}}>
                 <RectButton
-                    style={[styles.rightAction, { backgroundColor: color }]} >
+                    style={[styles.rightAction, {backgroundColor: color}]}>
                     <Text style={styles.actionText}>{text}</Text>
                 </RectButton>
             </Animated.View>
@@ -90,11 +89,12 @@ export default function ProductItem(props) {
 
     const doSwipeOperation = (direction) => {
         removeNotification(notificationId).then(() => {
+            let food = realm.objectForPrimaryKey("Food", props.item._id);
             realm.write(() => {
                 if(!renderMoreInfo) {
-                    realm.delete(props.item);
+                    realm.delete(food);
+                    food = null;
                 } else {
-                    const food = realm.objectForPrimaryKey("Food", props.item._id);
                     food.inFridge = false;
                     food.expirationDate = null;
                 }
@@ -103,48 +103,50 @@ export default function ProductItem(props) {
     }
 
     const renderAction = () => {
-        if(inFridge) {
-            return <AntDesign name="check" size={30} color={theme.colors.success} />;
+        if (inFridge) {
+            return <AntDesign name="check" size={30} color={theme.colors.success}/>;
         }
         return (
             <TouchableOpacity
                 onPress={() => onAddToMyFridge()}>
-                <AntDesign name="plussquare" size={30} color={theme.colors.primary} />
+                <AntDesign name="plussquare" size={30} color={theme.colors.primary}/>
             </TouchableOpacity>
         );
     }
 
     return (
-        <Swipeable
-            ref={updateRef}
-            friction={2}
-            enableTrackpadTwoFingerGesture
-            rightThreshold={40}
-            renderRightActions={renderRightActions}
-            onSwipeableOpen={doSwipeOperation}
-        >
-            <View style={styles.product}>
-                <Image source={getImage()} style={styles.productImage}/>
-                <View style={styles.productDetail}>
-                    <View style={styles.productDetailHeader}>
-                        <Text style={styles.productName} numberOfLines={2} ellipsizeMode='tail'>
-                            {foodName}
-                        </Text>
-                        {renderMoreInfo && isNearExpirationDate()}
-                        {!renderMoreInfo && renderAction()}
-                    </View>
-                    { renderMoreInfo &&
-                        <View style={styles.productDetailFooter}>
-                            <View style={styles.productExpDateContainer}>
-                                <Text style={styles.productExpirationDate}>
-                                    {i18n.t('expirationDate')}: {getDate()}
-                                </Text>
-                            </View>
+        <GestureHandlerRootView>
+            <Swipeable
+                ref={updateRef}
+                friction={2}
+                enableTrackpadTwoFingerGesture
+                rightThreshold={40}
+                renderRightActions={renderRightActions}
+                onSwipeableOpen={doSwipeOperation}
+            >
+                <View style={styles.product}>
+                    <Image source={getImage()} style={styles.productImage}/>
+                    <View style={styles.productDetail}>
+                        <View style={styles.productDetailHeader}>
+                            <Text style={styles.productName} numberOfLines={2} ellipsizeMode='tail'>
+                                {foodName}
+                            </Text>
+                            {renderMoreInfo && isNearExpirationDate()}
+                            {!renderMoreInfo && renderAction()}
                         </View>
-                    }
+                        {renderMoreInfo &&
+                            <View style={styles.productDetailFooter}>
+                                <View style={styles.productExpDateContainer}>
+                                    <Text style={styles.productExpirationDate}>
+                                        {i18n.t('expirationDate')}: {getDate()}
+                                    </Text>
+                                </View>
+                            </View>
+                        }
+                    </View>
                 </View>
-            </View>
-        </Swipeable>
+            </Swipeable>
+        </GestureHandlerRootView>
     );
 }
 
@@ -168,8 +170,9 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     productDetailHeader: {
-        alignItems: 'center',
         justifyContent: 'space-between',
+        alignItems: 'center',
+        flex: 1,
         flexDirection: 'row',
     },
     productName: {

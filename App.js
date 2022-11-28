@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import theme from './src/core/theme'
@@ -11,6 +11,8 @@ import {AntDesign, Ionicons, MaterialCommunityIcons, FontAwesome} from "@expo/ve
 import i18n from "./src/core/translations";
 import {Provider} from "react-native-paper";
 import {setDefaultSettings, settings} from "./src/helpers/SettingsHelper";
+import {Platform} from "react-native";
+import * as Device from "expo-device";
 
 const Tab = createBottomTabNavigator();
 
@@ -25,22 +27,34 @@ Notifications.setNotificationHandler({
 export default function App() {
 
     const {RealmProvider} = RealmContext;
+    const [expoPushToken, setExpoPushToken] = useState('');
 
     useEffect(() => {
-        setDefaultSettings()
-            .then(r => console.debug(settings))
+        setDefaultSettings().then(r => console.debug(settings))
+        registerForPushNotificationsAsync()
+            .then(token => setExpoPushToken(token))
             .catch(e => console.error(e));
-        Notifications.getPermissionsAsync().then((statusObj) => {
-            if (statusObj.status !== 'granted') {
-                return Permissions.askAsync('notifications')
-            }
-            return statusObj;
-        }).then((statusObj) => {
-            if (statusObj.status !== 'granted') {
-                return true;
-            }
-        })
     }, [])
+
+    async function registerForPushNotificationsAsync() {
+        let token;
+
+        if (Platform.OS === 'android') {
+            await Notifications.setNotificationChannelAsync('default', {
+                name: 'default',
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#FF231F7C',
+            });
+        }
+
+        if (Device.isDevice) {
+            const { status: existingStatus } = await Notifications.getPermissionsAsync();
+            if (existingStatus !== 'granted') {
+                await Notifications.requestPermissionsAsync();
+            }
+        }
+    }
 
     return (
         <RealmProvider>
