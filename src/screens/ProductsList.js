@@ -24,7 +24,8 @@ export default function ProductsList({route}) {
     const [modalOpen, setModalOpen] = useState(false);
     const [date, setDate] = useState(new Date());
     const [itemToAdd, setItemToAdd] = useState();
-    const [visible, setVisible] = React.useState(false);
+    const [visible, setVisible] = useState(false);
+    const [sortBy, setSortBy] = useState('expirationDate');
 
     const openMenu = () => setVisible(true);
 
@@ -32,13 +33,18 @@ export default function ProductsList({route}) {
 
     useEffect(() => {
         if (route.name === 'ProductsList') {
-            items = items.filtered('inFridge == true').sorted('expirationDate');
+            items = items.filtered('inFridge == true')
+            setSortBy('expirationDate')
         } else {
-            items = items.sorted('foodName');
+            setSortBy('foodName')
         }
-        setFilteredDataSource(items);
-        setMasterDataSource(items);
     }, []);
+
+    useEffect(() => {
+        const sorted = items.sorted(sortBy);
+        setFilteredDataSource(sorted);
+        setMasterDataSource(sorted);
+    }, [sortBy]);
 
     const searchFilterFunction = (text) => {
         if (text) {
@@ -79,14 +85,43 @@ export default function ProductsList({route}) {
         </View>;
     }
 
+    const renderFilterIcon = () => {
+        return <View style={styles.sortContainer}>
+            <TouchableOpacity
+                onPress={openMenu}>
+                {sortBy === 'expirationDate' ?
+                    <MaterialCommunityIcons name="sort-calendar-ascending" size={30} color={theme.colors.primary}/> :
+                    <MaterialCommunityIcons name="sort-alphabetical-ascending" size={30} color={theme.colors.primary}/>
+                }
+            </TouchableOpacity>
+        </View>
+    }
+
+    const onSortPress = (sortBy: string) => {
+        setSortBy(sortBy);
+        closeMenu();
+    }
+
     return (
         <View style={commonStyles.container}>
-            <Searchbar
-                placeholder={i18n.t('search')}
-                onChangeText={(text) => searchFilterFunction(text)}
-                value={searchQuery}
-                style={styles.searchbar}
-            />
+            <View style={styles.searchbarContainer}>
+                <Searchbar
+                    placeholder={i18n.t('search')}
+                    onChangeText={(text) => searchFilterFunction(text)}
+                    value={searchQuery}
+                    style={styles.searchbar}
+                />
+                {route.name === 'ProductsList' && (
+                    <Menu
+                        visible={visible}
+                        onDismiss={closeMenu}
+                        anchor={renderFilterIcon()}>
+                        <Menu.Item onPress={() => onSortPress("expirationDate")} title="Order by expiration date"/>
+                        <Menu.Item onPress={() => onSortPress('foodName')} title="Order by name"/>
+                    </Menu>
+                )}
+
+            </View>
             {filteredDataSource.length === 0 && renderNoItems()}
             {filteredDataSource.length > 0 &&
                 <View style={commonStyles.content}>
@@ -158,6 +193,9 @@ const styles = StyleSheet.create({
         marginTop: 10,
         backgroundColor: theme.colors.onPrimary,
         width: '50%'
+    },
+    sortContainer: {
+        margin: 10
     }
 })
 
