@@ -23,5 +23,8 @@ export async function schedulePushNotification(title, body, date) {
 }
 
 export function removeNotification(id) {
+    if(!id || id === 'null' ) {
+        return Promise.resolve();
+    }
     return Notifications.cancelScheduledNotificationAsync(id);
 }

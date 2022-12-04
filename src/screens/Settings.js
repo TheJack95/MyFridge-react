@@ -13,12 +13,17 @@ import {
 } from "../helpers/SettingsHelper";
 import Header from "../components/Header";
 import {useState} from "react";
+import Button from "../components/Button";
+import {RealmContext} from "../models";
 
 export default function Settings() {
     const image = require('../core/backgound.jpeg');
     const [notificationsAllowed, setNotificationsAllowed] = useState(settings.notificationsAllowed === 'true');
     const [firstNotification, setFirstNotification] = useState(settings.firstNotification);
     const [secondNotification, setSecondNotification] = useState(settings.secondNotification);
+
+    const {useRealm} = RealmContext;
+    const realm = useRealm();
 
     const onNotificationValueChange = (value) => {
         setNotificationsAllowed(value);
@@ -38,38 +43,44 @@ export default function Settings() {
     return (
         <ImageBackground source={image} style={styles.image}>
             <View style={commonStyles.content}>
-                <View style={{margin: 10}}>
-                    <Header
-                        fontSize={21}
-                        color={theme.colors.onPrimary}
-                        textAlign={'justify'}
-                    >{i18n.t('notifications')}</Header>
-                    <Paragraph style={{color: theme.colors.onSecondary}}>{i18n.t('notificationSettingText2')}</Paragraph>
-                </View>
-                <View style={styles.notSettingsContainer}>
-                    <View style={styles.switchContainer}>
-                        <Paragraph style={styles.switchText}>{i18n.t('notificationSettingText')}</Paragraph>
-                        <Switch value={notificationsAllowed} onValueChange={(value) => onNotificationValueChange(value)}
-                                color={theme.colors.primary}/>
+                <View>
+                    <View style={{margin: 10}}>
+                        <Header
+                            fontSize={21}
+                            color={theme.colors.onPrimary}
+                            textAlign={'justify'}
+                        >
+                            {i18n.t('notifications')}
+                        </Header>
+                        <Paragraph style={{color: theme.colors.onSecondary}}>
+                            {i18n.t('notificationSettingText2')}
+                        </Paragraph>
                     </View>
-                    {notificationsAllowed && (
-                        <>
-                            <View style={styles.switchContainer}>
-                                <Paragraph style={styles.switchText}>{i18n.t('firstNotification')}</Paragraph>
-                                <InputSpinner
-                                    min={1}
-                                    step={1}
-                                    color={theme.colors.primary}
-                                    value={firstNotification}
-                                    onChange={(num) => {
-                                        onFirstNotificationValueChange(num);
-                                    }}
-                                    skin='round'
-                                    width={100}
-                                    height={35}
-                                />
-                            </View>
-                            {/*<View style={styles.switchContainer}>
+                    <View style={styles.notSettingsContainer}>
+                        <View style={styles.switchContainer}>
+                            <Paragraph style={styles.switchText}>{i18n.t('notificationSettingText')}</Paragraph>
+                            <Switch value={notificationsAllowed}
+                                    onValueChange={(value) => onNotificationValueChange(value)}
+                                    color={theme.colors.primary}/>
+                        </View>
+                        {notificationsAllowed && (
+                            <>
+                                <View style={styles.switchContainer}>
+                                    <Paragraph style={styles.switchText}>{i18n.t('firstNotification')}</Paragraph>
+                                    <InputSpinner
+                                        min={1}
+                                        step={1}
+                                        color={theme.colors.primary}
+                                        value={firstNotification}
+                                        onChange={(num) => {
+                                            onFirstNotificationValueChange(num);
+                                        }}
+                                        skin='round'
+                                        width={100}
+                                        height={35}
+                                    />
+                                </View>
+                                {/*<View style={styles.switchContainer}>
                                 <Paragraph style={styles.switchText}>{i18n.t('secondNotification')}</Paragraph>
                                 <InputSpinner
                                     min={0}
@@ -84,16 +95,38 @@ export default function Settings() {
                                     height={35}
                                 />
                             </View>*/}
-                        </>
-                    )}
+                            </>
+                        )}
+                    </View>
                 </View>
-                {/*<View style={{margin: 10}}>
-                    <Header
-                        fontSize={21}
-                        color={theme.colors.onPrimary}
-                        textAlign={'justify'}
-                    >{i18n.t('language')}</Header>
-                </View>*/}
+                <View>
+                    <View style={{margin: 10}}>
+                        <Header
+                            fontSize={21}
+                            color={theme.colors.onPrimary}
+                            textAlign={'justify'}
+                        >{i18n.t('language')}</Header>
+                </View>
+                </View>
+                <View>
+                    <View style={{margin: 10}}>
+                        <Header
+                            fontSize={21}
+                            color={theme.colors.onPrimary}
+                            textAlign={'justify'}
+                        >
+                            {i18n.t('dataManage')}
+                        </Header>
+                        <Paragraph style={{color: theme.colors.onSecondary}}>
+                            {i18n.t('dataManageText')}
+                        </Paragraph>
+                    </View>
+                    <View style={{margin: 10}}>
+                        <Button style={{backgroundColor: theme.colors.fd2301}} mode="contained" onPress={() => realm.deleteAll()}>
+                            {i18n.t('deleteAll')}
+                        </Button>
+                    </View>
+                </View>
             </View>
         </ImageBackground>
     )

@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
         margin: 10
     },
     button: {
-        marginTop: 30
+        marginTop: 30,
+        backgroundColor: theme.colors.primary
     }
 });

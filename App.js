@@ -6,13 +6,13 @@ import {BarcodeScanner, ProductsList, Settings} from './src/screens'
 import NewProduct from "./src/screens/NewProduct";
 import {RealmContext} from './src/models';
 import * as Notifications from "expo-notifications";
-import * as Permissions from "expo-permissions";
-import {AntDesign, Ionicons, MaterialCommunityIcons, FontAwesome} from "@expo/vector-icons";
+import {AntDesign, FontAwesome, Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
 import i18n from "./src/core/translations";
 import {Provider} from "react-native-paper";
 import {setDefaultSettings, settings} from "./src/helpers/SettingsHelper";
 import {Platform} from "react-native";
 import * as Device from "expo-device";
+import {GestureHandlerRootView} from "react-native-gesture-handler";
 
 const Tab = createBottomTabNavigator();
 
@@ -49,7 +49,7 @@ export default function App() {
         }
 
         if (Device.isDevice) {
-            const { status: existingStatus } = await Notifications.getPermissionsAsync();
+            const {status: existingStatus} = await Notifications.getPermissionsAsync();
             if (existingStatus !== 'granted') {
                 await Notifications.requestPermissionsAsync();
             }
@@ -59,83 +59,83 @@ export default function App() {
     return (
         <RealmProvider>
             <Provider>
-                <NavigationContainer theme={theme}>
-                    <Tab.Navigator
-                        screenOptions={({route}) => ({
-                            initialRouteName: 'ProductsList',
-                            unmountOnBlur: true,
-                            headerStyle: {
-                                backgroundColor: theme.colors.primary
-                            },
-                            headerTitleStyle: {
-                                fontSize: 30,
-                                color: theme.colors.onSecondary,
-                                fontWeight: 'bold',
-                            },
-                            tabBarStyle: {
-                                backgroundColor: theme.colors.primary,
-                                height: 100,
-                                padding: 15
-                            },
-                            tabBarItemStyle: {
-                                borderRadius: 10,
-                                height: 60,
-                                paddingVertical: 5
-                            },
-                            tabBarInactiveTintColor: theme.colors.primaryContainer,
-                            tabBarActiveTintColor: theme.colors.primaryContainer,
-                            tabBarActiveBackgroundColor: theme.colors.onPrimaryContainer,
-                            tabBarIcon: ({focused, color, size}) => {
-                                switch (route.name) {
-                                    case 'NewProduct':
-                                        return <AntDesign name="plussquare" size={50} color={theme.colors.success}/>
-                                    case 'BarcodeScanner':
-                                        return <MaterialCommunityIcons name="barcode-scan" size={30}
-                                                                       color={theme.colors.tertiary}/>;
-                                    case 'ItemList':
-                                        return <FontAwesome name="list" size={30} color={theme.colors.inversePrimary}/>;
-                                    case 'Settings':
-                                        return <Ionicons name="settings-sharp" size={30}
-                                                         color={theme.colors.outlineVariant}/>;
-                                    default:
-                                        return <MaterialCommunityIcons name="fridge-variant" size={35}
-                                                                       color={theme.colors.warning}/>;
+                <GestureHandlerRootView style={{flex: 1}}>
+                    <NavigationContainer theme={theme}>
+                        <Tab.Navigator
+                            screenOptions={({route}) => ({
+                                initialRouteName: 'ProductsList',
+                                unmountOnBlur: true,
+                                headerStyle: {
+                                    backgroundColor: theme.colors.primary,
+                                },
+                                headerTitleStyle: {
+                                    fontSize: 30,
+                                    color: theme.colors.onSecondary,
+                                    fontWeight: 'bold',
+                                },
+                                tabBarStyle: {
+                                    backgroundColor: theme.colors.primary,
+                                    height: 60
+                                },
+                                tabBarItemStyle: {
+                                    paddingVertical: 5
+                                },
+                                tabBarInactiveTintColor: theme.colors.primaryContainer,
+                                tabBarActiveTintColor: theme.colors.primaryContainer,
+                                tabBarActiveBackgroundColor: theme.colors.onPrimaryContainer,
+                                tabBarIcon: ({focused, color, size}) => {
+                                    switch (route.name) {
+                                        case 'NewProduct':
+                                            return <AntDesign name="plussquare" size={50} color={theme.colors.success}/>
+                                        case 'BarcodeScanner':
+                                            return <MaterialCommunityIcons name="barcode-scan" size={30}
+                                                                           color={theme.colors.tertiary}/>;
+                                        case 'ItemList':
+                                            return <FontAwesome name="list" size={30}
+                                                                color={theme.colors.inversePrimary}/>;
+                                        case 'Settings':
+                                            return <Ionicons name="settings-sharp" size={30}
+                                                             color={theme.colors.outlineVariant}/>;
+                                        default:
+                                            return <MaterialCommunityIcons name="fridge-variant" size={35}
+                                                                           color={theme.colors.warning}/>;
+                                    }
                                 }
-                            }
-                        })}
-                    >
-                        <Tab.Screen
-                            name="ProductsList"
-                            component={ProductsList}
-                            options={{
-                                title: i18n.t('appName'),
-                            }}
-                        />
-                        <Tab.Screen
-                            name="ItemList"
-                            component={ProductsList}
-                            options={{title: i18n.t('myProducts')}}
-                        />
-                        <Tab.Screen
-                            name="NewProduct"
-                            component={NewProduct}
-                            options={{
-                                tabBarLabel: () => null,
-                                title: i18n.t('addNewProduct')
-                            }}
-                        />
-                        <Tab.Screen
-                            name="BarcodeScanner"
-                            component={BarcodeScanner}
-                            options={{title: i18n.t('scanProduct')}}
-                        />
-                        <Tab.Screen
-                            name="Settings"
-                            component={Settings}
-                            options={{title: i18n.t('settings')}}
-                        />
-                    </Tab.Navigator>
-                </NavigationContainer>
+                            })}
+                        >
+                            <Tab.Screen
+                                name="ProductsList"
+                                component={ProductsList}
+                                options={{
+                                    title: i18n.t('appName'),
+                                }}
+                            />
+                            <Tab.Screen
+                                name="ItemList"
+                                component={ProductsList}
+                                options={{title: i18n.t('myProducts')}}
+                            />
+                            <Tab.Screen
+                                name="NewProduct"
+                                component={NewProduct}
+                                options={{
+                                    tabBarLabel: () => null,
+                                    title: i18n.t('addNewProduct')
+                                }}
+                            />
+                            <Tab.Screen
+                                name="BarcodeScanner"
+                                component={BarcodeScanner}
+                                options={{title: i18n.t('scanProduct')}}
+                            />
+                            <Tab.Screen
+                                name="Settings"
+                                component={Settings}
+                                options={{title: i18n.t('settings')}}
+                            />
+                        </Tab.Navigator>
+                    </NavigationContainer>
+                </GestureHandlerRootView>
             </Provider>
         </RealmProvider>
     )

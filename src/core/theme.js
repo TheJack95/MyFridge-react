@@ -149,9 +149,8 @@ export const commonStyles = StyleSheet.create({
     marginTop: 50,
   },
   modalView: {
-    margin: 20,
-    marginTop: 100,
-    backgroundColor: "white",
+    marginHorizontal: 20,
+    backgroundColor: theme.colors.surfaceVariant,
     borderRadius: 20,
     padding: 35,
     alignItems: "center",

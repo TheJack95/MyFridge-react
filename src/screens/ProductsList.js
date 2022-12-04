@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import ProductItem from './ProductItem'
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Header from "../components/Header";
 import theme, {commonStyles, Screen} from "../core/theme";
 import {RealmContext} from "../models";
@@ -9,27 +9,33 @@ import Paragraph from "../components/Paragraph";
 import Logo from "../components/Logo";
 import i18n from "../core/translations";
 import {FlashList} from "@shopify/flash-list";
-import {Modal, Portal, Searchbar} from "react-native-paper";
+import {Menu, Modal, Portal, Searchbar} from "react-native-paper";
 import Button from "../components/Button";
 import DatePicker from "react-native-date-picker";
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 
 export default function ProductsList({route}) {
     const {useQuery, useRealm} = RealmContext;
     const realm = useRealm();
-    let items = [];
+    let items = useQuery(Food);
     const [filteredDataSource, setFilteredDataSource] = useState([]);
     const [masterDataSource, setMasterDataSource] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
     const [date, setDate] = useState(new Date());
     const [itemToAdd, setItemToAdd] = useState();
+    const [visible, setVisible] = React.useState(false);
 
-    if (route.name === 'ProductsList')
-        items = useQuery(Food).filtered('inFridge == true');
-    else
-        items = useQuery(Food);
+    const openMenu = () => setVisible(true);
+
+    const closeMenu = () => setVisible(false);
 
     useEffect(() => {
+        if (route.name === 'ProductsList') {
+            items = items.filtered('inFridge == true').sorted('expirationDate');
+        } else {
+            items = items.sorted('foodName');
+        }
         setFilteredDataSource(items);
         setMasterDataSource(items);
     }, []);
@@ -116,11 +122,13 @@ export default function ProductsList({route}) {
                     >{i18n.t('expirationDate')}</Header>
                     <DatePicker
                         date={date}
-                        mode="date"
-                        onChange={onDateChange}
-                        minimumDate={new Date()}
+                        onDateChange={onDateChange}
                         androidVariant='iosClone'
+                        minimumDate={new Date()}
+                        mode="date"
                         locale={i18n.locale}
+                        fadeToColor={theme.colors.primaryContainer}
+                        theme="light"
                     />
                     <Button style={styles.saveButton} mode="contained" onPress={onAddToMyFridge}>
                         {i18n.t('save')}
@@ -136,10 +144,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    searchbar: {
+    searchbarContainer: {
         zIndex: 1,
         marginVertical: 10,
-        backgroundColor: 'white',
+        backgroundColor: theme.colors.secondaryContainer,
+        flexDirection: "row",
+    },
+    searchbar: {
+        flexGrow: 1,
+        backgroundColor: theme.colors.secondaryContainer,
     },
     saveButton: {
         marginTop: 10,

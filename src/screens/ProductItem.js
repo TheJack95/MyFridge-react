@@ -3,7 +3,7 @@ import {Animated, Dimensions, I18nManager, Image, StyleSheet, Text, TouchableOpa
 import {AntDesign, Entypo} from '@expo/vector-icons';
 
 import theme from "../core/theme";
-import {GestureHandlerRootView, RectButton, Swipeable} from "react-native-gesture-handler";
+import {RectButton, Swipeable} from "react-native-gesture-handler";
 import {RealmContext} from "../models";
 import {IMAGES} from "../constants/images";
 import i18n from "../core/translations";
@@ -63,12 +63,21 @@ export default function ProductItem(props) {
         return (
             <Animated.View style={{flex: 1, transform: [{translateX: trans}]}}>
                 <RectButton
-                    style={[styles.rightAction, {backgroundColor: color}]}>
+                    style={[styles.rightAction, {backgroundColor: color}]}
+                    onPress={doSwipeOperation}
+                >
                     <Text style={styles.actionText}>{text}</Text>
                 </RectButton>
             </Animated.View>
         );
     };
+
+    const getRightActionText = () => {
+        if(renderMoreInfo) {
+            return i18n.t("remove");
+        }
+        return i18n.t("delete");
+    }
 
     const renderRightActions = (
         progress: Animated.AnimatedInterpolation,
@@ -76,10 +85,11 @@ export default function ProductItem(props) {
     ) => (
         <View
             style={{
-                width: 192,
+                marginLeft: -30,
+                width: 110,
                 flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
             }}>
-            {renderRightAction('Delete', '#dd2c00', 64, progress)}
+            {renderRightAction(getRightActionText(), '#dd2c00', 64, progress)}
         </View>
     );
 
@@ -88,18 +98,17 @@ export default function ProductItem(props) {
     };
 
     const doSwipeOperation = (direction) => {
-        removeNotification(notificationId).then(() => {
+        realm.write(() => {
             let food = realm.objectForPrimaryKey("Food", props.item._id);
-            realm.write(() => {
-                if(!renderMoreInfo) {
-                    realm.delete(food);
-                    food = null;
-                } else {
-                    food.inFridge = false;
-                    food.expirationDate = null;
-                }
-            });
-        }).catch(error => console.error(error));
+            if (!renderMoreInfo) {
+                realm.delete(food);
+            } else {
+                food.inFridge = false;
+                food.expirationDate = null;
+            }
+        });
+        removeNotification(notificationId).then(() => {})
+            .catch(error => console.error(error));
     }
 
     const renderAction = () => {
@@ -115,38 +124,31 @@ export default function ProductItem(props) {
     }
 
     return (
-        <GestureHandlerRootView>
-            <Swipeable
-                ref={updateRef}
-                friction={2}
-                enableTrackpadTwoFingerGesture
-                rightThreshold={40}
-                renderRightActions={renderRightActions}
-                onSwipeableOpen={doSwipeOperation}
-            >
-                <View style={styles.product}>
-                    <Image source={getImage()} style={styles.productImage}/>
-                    <View style={styles.productDetail}>
-                        <View style={styles.productDetailHeader}>
-                            <Text style={styles.productName} numberOfLines={2} ellipsizeMode='tail'>
-                                {foodName}
-                            </Text>
-                            {renderMoreInfo && isNearExpirationDate()}
-                            {!renderMoreInfo && renderAction()}
-                        </View>
-                        {renderMoreInfo &&
-                            <View style={styles.productDetailFooter}>
-                                <View style={styles.productExpDateContainer}>
-                                    <Text style={styles.productExpirationDate}>
-                                        {i18n.t('expirationDate')}: {getDate()}
-                                    </Text>
-                                </View>
-                            </View>
-                        }
-                    </View>
+        <Swipeable
+            ref={updateRef}
+            friction={2}
+            enableTrackpadTwoFingerGesture
+            rightThreshold={40}
+            renderRightActions={renderRightActions}
+        >
+            <View style={styles.product}>
+                <Image source={getImage()} style={styles.productImage}/>
+                <View style={styles.productDetail}>
+                    <Text style={styles.productName} numberOfLines={2} ellipsizeMode='tail'>
+                        {foodName}
+                    </Text>
+                    {renderMoreInfo &&
+                        <Text style={styles.productExpirationDate}>
+                            {i18n.t('expirationDate')}: {getDate()}
+                        </Text>
+                    }
                 </View>
-            </Swipeable>
-        </GestureHandlerRootView>
+                <View>
+                    {renderMoreInfo && isNearExpirationDate()}
+                    {!renderMoreInfo && renderAction()}
+                </View>
+            </View>
+        </Swipeable>
     );
 }
 
@@ -157,45 +159,23 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flex: 1,
         margin: 10,
-        borderRadius: 44/2
-    },
-    body: {
-        flex: 1,
-        height: Screen.height - 122,
+        borderRadius: 44 / 2,
+        alignItems: "center",
     },
     productDetail: {
-        justifyContent: 'space-around',
-        marginLeft: 10,
-        flexDirection: 'column',
-        flex: 1,
-    },
-    productDetailHeader: {
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flex: 1,
-        flexDirection: 'row',
+        flexGrow: 1,
+        marginLeft: 20
     },
     productName: {
         color: theme.colors.text,
         fontSize: 20,
         width: 180,
     },
-    productDetailFooter: {
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-    },
-    productExpDateContainer: {
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        flexDirection: 'row'
-    },
     productExpirationDate: {
         color: theme.colors.text,
         fontSize: 15,
     },
     leftAction: {
-        flex: 1,
         backgroundColor: '#497AFC',
         justifyContent: 'center',
     },
