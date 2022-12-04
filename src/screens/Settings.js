@@ -16,7 +16,7 @@ import {useState} from "react";
 import Button from "../components/Button";
 import {RealmContext} from "../models";
 
-export default function Settings() {
+export const SettingsScreen = () => {
     const image = require('../core/backgound.jpeg');
     const [notificationsAllowed, setNotificationsAllowed] = useState(settings.notificationsAllowed === 'true');
     const [firstNotification, setFirstNotification] = useState(settings.firstNotification);

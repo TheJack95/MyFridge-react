@@ -1,26 +1,20 @@
-import React from 'react';
-import {Animated, Dimensions, I18nManager, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
+import {Animated, I18nManager, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {AntDesign, Entypo} from '@expo/vector-icons';
 
 import theme from "../core/theme";
 import {RectButton, Swipeable} from "react-native-gesture-handler";
-import {RealmContext} from "../models";
 import {IMAGES} from "../constants/images";
 import i18n from "../core/translations";
+import AddToFridgeModal from "../components/AddToFridgeModal";
 import {removeNotification} from "../helpers/NotificationsHelper";
 
-const Screen = {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height
-}
+export const ProductItem = React.memo(({item, renderMoreInfo, onAddToMyFridge, onDelete}) => {
+    const {foodName, imageUrl, imageName, expirationDate, notificationId, inFridge} = item;
 
-export default function ProductItem(props) {
-    const {foodName, imageUrl, imageName, expirationDate, notificationId, inFridge} = props.item;
-    const {renderMoreInfo} = props;
-    const {onAddToMyFridge} = props;
-    const {useRealm} = RealmContext;
-    const realm = useRealm();
     let swipeableRow: Swipeable;
+
+    const [modalOpen, setModalOpen] = useState(false);
 
     const getDate = () => {
         return expirationDate?.toLocaleDateString();
@@ -73,7 +67,7 @@ export default function ProductItem(props) {
     };
 
     const getRightActionText = () => {
-        if(renderMoreInfo) {
+        if (renderMoreInfo) {
             return i18n.t("remove");
         }
         return i18n.t("delete");
@@ -97,16 +91,12 @@ export default function ProductItem(props) {
         swipeableRow = ref;
     };
 
-    const doSwipeOperation = (direction) => {
-        realm.write(() => {
-            let food = realm.objectForPrimaryKey("Food", props.item._id);
-            if (!renderMoreInfo) {
-                realm.delete(food);
-            } else {
-                food.inFridge = false;
-                food.expirationDate = null;
-            }
-        });
+    const doSwipeOperation = () => {
+        if (!renderMoreInfo) {
+            // onDelete();
+        } else {
+            onAddToMyFridge(new Date())
+        }
         removeNotification(notificationId).then(() => {})
             .catch(error => console.error(error));
     }
@@ -117,40 +107,49 @@ export default function ProductItem(props) {
         }
         return (
             <TouchableOpacity
-                onPress={() => onAddToMyFridge()}>
+                onPress={() => setModalOpen(true)}>
                 <AntDesign name="plussquare" size={30} color={theme.colors.primary}/>
             </TouchableOpacity>
         );
     }
 
+    const handleAddToMyFridge = (date) => {
+        setModalOpen(false);
+        onAddToMyFridge(date);
+    }
+
     return (
-        <Swipeable
-            ref={updateRef}
-            friction={2}
-            enableTrackpadTwoFingerGesture
-            rightThreshold={40}
-            renderRightActions={renderRightActions}
-        >
-            <View style={styles.product}>
-                <Image source={getImage()} style={styles.productImage}/>
-                <View style={styles.productDetail}>
-                    <Text style={styles.productName} numberOfLines={2} ellipsizeMode='tail'>
-                        {foodName}
-                    </Text>
-                    {renderMoreInfo &&
-                        <Text style={styles.productExpirationDate}>
-                            {i18n.t('expirationDate')}: {getDate()}
+        <>
+            <Swipeable
+                ref={updateRef}
+                friction={2}
+                enableTrackpadTwoFingerGesture
+                rightThreshold={40}
+                renderRightActions={renderRightActions}
+            >
+                <View style={styles.product}>
+                    <Image source={getImage()} style={styles.productImage}/>
+                    <View style={styles.productDetail}>
+                        <Text style={styles.productName} numberOfLines={2} ellipsizeMode='tail'>
+                            {foodName}
                         </Text>
-                    }
+                        {renderMoreInfo &&
+                            <Text style={styles.productExpirationDate}>
+                                {i18n.t('expirationDate')}: {getDate()}
+                            </Text>
+                        }
+                    </View>
+                    <View>
+                        {renderMoreInfo && isNearExpirationDate()}
+                        {!renderMoreInfo && renderAction()}
+                    </View>
                 </View>
-                <View>
-                    {renderMoreInfo && isNearExpirationDate()}
-                    {!renderMoreInfo && renderAction()}
-                </View>
-            </View>
-        </Swipeable>
+            </Swipeable>
+            <AddToFridgeModal modalOpen={modalOpen} onDismiss={() => setModalOpen(false)}
+                              onAddToMyFridge={handleAddToMyFridge}/>
+        </>
     );
-}
+});
 
 const styles = StyleSheet.create({
     product: {

@@ -7,7 +7,7 @@ import i18n from "../core/translations";
 import Header from "../components/Header";
 import Button from "../components/Button";
 
-export default function ImageSelection({onImgSelection, setModalVisible, modalVisible}) {
+export const ImageSelection = ({onImgSelection, setModalVisible, modalVisible}) => {
 
     const getImage = (img) => {
         return IMAGES[img];

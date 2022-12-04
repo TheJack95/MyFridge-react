@@ -1,4 +1,4 @@
-import {Text, View, StyleSheet} from 'react-native';
+import { View, StyleSheet} from 'react-native';
 import {BarCodeScanner} from 'expo-barcode-scanner';
 import React, {useEffect, useState} from "react";
 import Header from "../components/Header";
@@ -7,7 +7,7 @@ import getProductByBarcode from "../helpers/BarcodeScannerHelper";
 import theme, {commonStyles} from "../core/theme";
 import i18n from "../core/translations";
 
-export default function BarcodeScanner({navigation}) {
+export const BarcodeScanner = ({navigation}) => {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [notFound, setNotFound] = useState(false);

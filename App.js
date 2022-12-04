@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import theme from './src/core/theme'
-import {BarcodeScanner, ProductsList, Settings} from './src/screens'
-import NewProduct from "./src/screens/NewProduct";
 import {RealmContext} from './src/models';
 import * as Notifications from "expo-notifications";
 import {AntDesign, FontAwesome, Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
@@ -13,6 +11,10 @@ import {setDefaultSettings, settings} from "./src/helpers/SettingsHelper";
 import {Platform} from "react-native";
 import * as Device from "expo-device";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
+import FoodManager from "./src/screens/FoodManager";
+import {NewProduct} from "./src/screens/NewProduct";
+import {BarcodeScanner} from "./src/screens/BarcodeScanner";
+import {SettingsScreen} from "./src/screens/Settings";
 
 const Tab = createBottomTabNavigator();
 
@@ -105,14 +107,14 @@ export default function App() {
                         >
                             <Tab.Screen
                                 name="ProductsList"
-                                component={ProductsList}
+                                component={FoodManager}
                                 options={{
                                     title: i18n.t('appName'),
                                 }}
                             />
                             <Tab.Screen
                                 name="ItemList"
-                                component={ProductsList}
+                                component={FoodManager}
                                 options={{title: i18n.t('myProducts')}}
                             />
                             <Tab.Screen
@@ -130,7 +132,7 @@ export default function App() {
                             />
                             <Tab.Screen
                                 name="Settings"
-                                component={Settings}
+                                component={SettingsScreen}
                                 options={{title: i18n.t('settings')}}
                             />
                         </Tab.Navigator>

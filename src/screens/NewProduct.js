@@ -11,12 +11,12 @@ import demoProduct from '../assets/foods/healthy-food.png'
 import theme, {commonStyles} from "../core/theme";
 import {schedulePushNotification} from "../helpers/NotificationsHelper";
 import i18n from "../core/translations";
-import ImageSelection from "./ImageSelection";
 import {IMAGES} from "../constants/images";
 import Paragraph from "../components/Paragraph";
 import {settings} from "../helpers/SettingsHelper";
+import {ImageSelection} from "./ImageSelection";
 
-export default function NewProduct({navigation, route}) {
+export const NewProduct = ({navigation, route}) => {
     const {useRealm} = RealmContext;
     const realm = useRealm();
 
