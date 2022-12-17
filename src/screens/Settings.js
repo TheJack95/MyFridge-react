@@ -40,6 +40,10 @@ export const SettingsScreen = () => {
         setSettings(SECOND_NOTIFICATION, value.toString()).then(r => console.debug(`${SECOND_NOTIFICATION} value: ${value} saved`));
     }
 
+    const deleteAll = () => {
+        realm.write(() => realm.deleteAll());
+    }
+
     return (
         <ImageBackground source={image} style={styles.image}>
             <View style={commonStyles.content}>
@@ -122,7 +126,7 @@ export const SettingsScreen = () => {
                         </Paragraph>
                     </View>
                     <View style={{margin: 10}}>
-                        <Button style={{backgroundColor: theme.colors.fd2301}} mode="contained" onPress={() => realm.deleteAll()}>
+                        <Button style={{backgroundColor: theme.colors.fd2301}} mode="contained" onPress={deleteAll}>
                             {i18n.t('deleteAll')}
                         </Button>
                     </View>

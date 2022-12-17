@@ -24,7 +24,7 @@ export default function FoodManager({route}) {
     const handleDeleteFood = useCallback(
         (food: Food) => {
             realm.write(() => {
-                realm?.delete(realm?.objectForPrimaryKey('Food', food._id));
+                realm.delete(realm.objectForPrimaryKey('Food', food._id));
             });
         },
         [realm],

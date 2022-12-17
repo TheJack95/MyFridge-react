@@ -3,7 +3,7 @@ import {Animated, I18nManager, Image, StyleSheet, Text, TouchableOpacity, View} 
 import {AntDesign, Entypo} from '@expo/vector-icons';
 
 import theme from "../core/theme";
-import {RectButton, Swipeable} from "react-native-gesture-handler";
+import {GestureHandlerRootView, RectButton, Swipeable} from "react-native-gesture-handler";
 import {IMAGES} from "../constants/images";
 import i18n from "../core/translations";
 import AddToFridgeModal from "../components/AddToFridgeModal";
@@ -93,7 +93,7 @@ export const ProductItem = React.memo(({item, renderMoreInfo, onAddToMyFridge, o
 
     const doSwipeOperation = () => {
         if (!renderMoreInfo) {
-            // onDelete();
+            onDelete();
         } else {
             onAddToMyFridge(new Date())
         }
@@ -119,7 +119,7 @@ export const ProductItem = React.memo(({item, renderMoreInfo, onAddToMyFridge, o
     }
 
     return (
-        <>
+        <GestureHandlerRootView>
             <Swipeable
                 ref={updateRef}
                 friction={2}
@@ -147,7 +147,7 @@ export const ProductItem = React.memo(({item, renderMoreInfo, onAddToMyFridge, o
             </Swipeable>
             <AddToFridgeModal modalOpen={modalOpen} onDismiss={() => setModalOpen(false)}
                               onAddToMyFridge={handleAddToMyFridge}/>
-        </>
+        </GestureHandlerRootView>
     );
 });
 
